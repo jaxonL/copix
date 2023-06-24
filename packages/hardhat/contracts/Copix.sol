@@ -137,26 +137,49 @@ contract Copix is ERC721, Ownable {
   }
 
 
-  // TODO: getTokenUri override function that returns the latest color + timestamp
-  // function tokenUri(uint256 tokenId) public view override returns (string memory) {
-  //   require(_exists(tokenId), "Pixel does not exist");
-  //   string memory colour = colours[tokenId];
-  //   string memory baseURI = "https://example.com/tokens/";
-  //   string memory tokenURISuffix = ".json";
-  //   string memory json = string(
-  //       abi.encodePacked(
-  //           '{ "color": "', latestColor,
-  //           '", "timestamp": ', uint256ToString(latestTimestamp),
-  //           ' }'
-  //       )
+  // TODO: add color, timestamp etc. as attributes in json so it shows on OpenSea
+  function tokenUri(uint256 tokenId) public view returns (string memory) {
+    require(tokenId < canvasHeight * canvasWidth, "Pixel does not exist");
+    uint256 latestIndex = pixels[tokenId].color.length - 1;
+    string memory latestColor = pixels[tokenId].color[latestIndex];
+    uint256 latestTimestamp = pixels[tokenId].editTimestamp[latestIndex];
+    uint8 latestEditedByHuman = pixels[tokenId].editedByHuman[latestIndex];
 
-  //   return string(abi.encodePacked('data:application/json;utf8,{"name":"Copix pixel #'tokenId'", "description":"TEMPUS EDAX RERUM\\n',
-  //         ((block.timestamp-_creationTimestamp)/86400).toString(),'", "created_by":"Pak", "image":"',
-  //           _generateImage(distance, completion, c1curve, c2curve, randHue, randOffset),
-  //           '"}'));    
-  //   return string(abi.encodePacked("data:application/json;utf8,{", tokenId.toString(), tokenURISuffix));
+    return string(
+        abi.encodePacked(
+            'data:application/json;utf8,{ "name": "Copix #"', tokenId, 
+            '"color": "', latestColor,
+            '", "timestamp": ', latestTimestamp,
+            '", "lastEditedbyHuman": ', latestEditedByHuman,
+            ' }'
+        )); 
+  }
 
-  // }
+  // Helper function to convert uint256 to string
+  function uint256ToString(uint256 value) internal pure returns (string memory) {
+      if (value == 0) {
+          return "0";
+      }
+
+      uint256 temp = value;
+      uint256 digits;
+
+      while (temp != 0) {
+          digits++;
+          temp /= 10;
+      }
+
+      bytes memory buffer = new bytes(digits);
+      uint256 index = digits - 1;
+      temp = value;
+
+      while (temp != 0) {
+          buffer[index--] = bytes1(uint8(48 + temp % 10));
+          temp /= 10;
+      }
+
+      return string(buffer);
+  }
 
   /**
    * verifies humanity of user using worldcoin
