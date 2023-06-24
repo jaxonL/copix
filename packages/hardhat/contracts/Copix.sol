@@ -38,9 +38,6 @@ contract Copix is ERC721, Ownable {
   /** @dev The World ID group ID (0 is phone) */
   uint8 internal immutable groupId_phone = 0;
 
-  string public greeting = "Building Unstoppable Apps!!!";
-  bool public premium = false;
-  uint256 public totalCounter = 0;
   /** @dev world id nullifier hashes to last edit timestamp (human-gated, instead of wallet-gated) */
   mapping(uint256 => uint256) public lastEditTime;
   /** @dev world id nullifier hashes for the paint action to # of times it was used */
