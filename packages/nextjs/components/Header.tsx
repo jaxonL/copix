@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { WorldCoinConnectButton } from "./copix/WorldCoinConnectButton";
-import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, PaintBrushIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
@@ -37,7 +37,10 @@ export const Header = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink href="/">Home</NavLink>
+        <NavLink href="/">
+          <PaintBrushIcon className="h-4 w-4" />
+          Home
+        </NavLink>
       </li>
       <li>
         <NavLink href="/debug">
@@ -45,12 +48,12 @@ export const Header = () => {
           Debug Contracts
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink href="/example-ui">
           <SparklesIcon className="h-4 w-4" />
           Example UI
         </NavLink>
-      </li>
+      </li> */}
       <li>
         <NavLink href="/blockexplorer">
           <MagnifyingGlassIcon className="h-4 w-4" />
