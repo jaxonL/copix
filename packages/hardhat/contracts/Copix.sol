@@ -155,32 +155,6 @@ contract Copix is ERC721, Ownable {
         )); 
   }
 
-  // Helper function to convert uint256 to string
-  function uint256ToString(uint256 value) internal pure returns (string memory) {
-      if (value == 0) {
-          return "0";
-      }
-
-      uint256 temp = value;
-      uint256 digits;
-
-      while (temp != 0) {
-          digits++;
-          temp /= 10;
-      }
-
-      bytes memory buffer = new bytes(digits);
-      uint256 index = digits - 1;
-      temp = value;
-
-      while (temp != 0) {
-          buffer[index--] = bytes1(uint8(48 + temp % 10));
-          temp /= 10;
-      }
-
-      return string(buffer);
-  }
-
   /**
    * verifies humanity of user using worldcoin
    * @param signal An arbitrary input from the user, usually the user's wallet address (check README for further details)
@@ -243,31 +217,6 @@ contract Copix is ERC721, Ownable {
   function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public virtual override {
     super.safeTransferFrom(from, to, tokenId, _data);
   }
-
-  // /**
-  //  * Function that allows anyone to change the state variable "greeting" of the contract and increase the counters
-  //  *
-  //  * @param _newGreeting (string memory) - new greeting to save on the contract
-  //  */
-  // function setGreeting(string memory _newGreeting) public payable {
-  //     // Print data to the hardhat chain console. Remove when deploying to a live network.
-  //     console.log("Setting new greeting '%s' from %s",  _newGreeting, msg.sender);
-
-  //     // Change state variables
-  //     greeting = _newGreeting;
-  //     totalCounter += 1;
-  //     userGreetingCounter[msg.sender] += 1;
-
-  //     // msg.value: built-in global variable that represents the amount of ether sent with the transaction
-  //     if (msg.value > 0) {
-  //         premium = true;
-  //     } else {
-  //         premium = false;
-  //     }
-
-  //     // emit: keyword used to trigger an event
-  //     emit GreetingChange(msg.sender, _newGreeting, msg.value > 0, 0);
-  // }
 
   /**
    * Function that allows the owner to withdraw all the Ether in the contract
