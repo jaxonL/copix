@@ -50,8 +50,7 @@ contract Copix is ERC721, Ownable {
 
   // Events: a way to emit log statements from smart contract that can be listened to by external parties
   event GreetingChange(address indexed greetingSetter, string newGreeting, bool premium, uint256 value);
-
-  // TODO: create a paint event that emits the address, new color, pixel, human
+  event PixelUpdate(address indexed painter, uint256 x, uint256 y, string color, uint256 timestamp, uint8 editedByHuman);
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed
   // Check the withdraw() function
@@ -111,6 +110,9 @@ contract Copix is ERC721, Ownable {
       // TODO: milestone 2: mint new token representing current state of canvas to previous owner
     }
     tokenIdToOwner[tokenId] = msg.sender;
+
+    // emit paint event
+    emit PixelUpdate(msg.sender, x, y, color, block.timestamp, humanityCode);
   }
 
   function _getTokenIdFromPixel(uint256 x, uint256 y) private view returns (uint256) {
