@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import Marquee from "react-fast-marquee";
 import { useAccount } from "wagmi";
 import {
-  useAnimationConfig,
-  useScaffoldContract,
-  useScaffoldContractRead,
+  // useAnimationConfig,
+  useScaffoldContract, // useScaffoldContractRead,
   useScaffoldEventHistory,
   useScaffoldEventSubscriber,
 } from "~~/hooks/scaffold-eth";
+import { CONTRACT_NAME } from "~~/utils/constants";
 
 const MARQUEE_PERIOD_IN_SEC = 5;
 
@@ -20,44 +20,48 @@ export const ContractData = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const greetingRef = useRef<HTMLDivElement>(null);
 
-  const { data: totalCounter } = useScaffoldContractRead({
-    contractName: "YourContract",
-    functionName: "totalCounter",
-  });
+  // const { data: totalCounter } = useScaffoldContractRead({
+  //   contractName: CONTRACT_NAME,
+  //   functionName: "totalCounter",
+  // });
+  const totalCounter = 0;
 
-  const { data: currentGreeting, isLoading: isGreetingLoading } = useScaffoldContractRead({
-    contractName: "YourContract",
-    functionName: "greeting",
-  });
+  // const { data: currentGreeting, isLoading: isGreetingLoading } = useScaffoldContractRead({
+  //   contractName: CONTRACT_NAME,
+  //   functionName: "greeting",
+  // });
+  const currentGreeting = "Hello world";
 
   useScaffoldEventSubscriber({
-    contractName: "YourContract",
-    eventName: "GreetingChange",
-    listener: (greetingSetter, newGreeting, premium, value) => {
-      console.log(greetingSetter, newGreeting, premium, value);
+    contractName: CONTRACT_NAME,
+    eventName: "PixelUpdate",
+    listener: (painter, x, y, newColor, timestamp, editedByHuman) => {
+      console.log(painter, x, y, newColor, timestamp, editedByHuman);
     },
   });
 
   const {
-    data: myGreetingChangeEvents,
+    data: myPixelUpdateEvents,
     isLoading: isLoadingEvents,
     error: errorReadingEvents,
   } = useScaffoldEventHistory({
-    contractName: "YourContract",
-    eventName: "GreetingChange",
+    contractName: CONTRACT_NAME,
+    eventName: "PixelUpdate",
     fromBlock: Number(process.env.NEXT_PUBLIC_DEPLOY_BLOCK) || 0,
-    filters: { greetingSetter: address },
+    filters: { painter: address },
     blockData: true,
   });
 
-  console.log("Events:", isLoadingEvents, errorReadingEvents, myGreetingChangeEvents);
+  console.log("Events:", isLoadingEvents, errorReadingEvents, myPixelUpdateEvents);
 
-  const { data: yourContract } = useScaffoldContract({ contractName: "YourContract" });
-  console.log("yourContract: ", yourContract);
+  const { data: copixContract } = useScaffoldContract({ contractName: CONTRACT_NAME });
+  console.log("yourContract: ", copixContract);
 
-  const { showAnimation } = useAnimationConfig(totalCounter);
+  // const { showAnimation } = useAnimationConfig(totalCounter);
+  const showAnimation = false;
 
-  const showTransition = transitionEnabled && !!currentGreeting && !isGreetingLoading;
+  // const showTransition = transitionEnabled && !!currentGreeting && !isGreetingLoading;
+  const showTransition = transitionEnabled;
 
   useEffect(() => {
     if (transitionEnabled && containerRef.current && greetingRef.current) {

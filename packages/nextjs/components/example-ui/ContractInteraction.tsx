@@ -3,21 +3,28 @@ import { CopyIcon } from "./assets/CopyIcon";
 import { DiamondIcon } from "./assets/DiamondIcon";
 import { HareIcon } from "./assets/HareIcon";
 import { ArrowSmallRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+
+// import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+// import { CONTRACT_NAME } from "~~/utils/constants";
 
 export const ContractInteraction = () => {
   const [visible, setVisible] = useState(true);
-  const [newGreeting, setNewGreeting] = useState("");
+  const [, setNewGreeting] = useState("");
 
-  const { writeAsync, isLoading } = useScaffoldContractWrite({
-    contractName: "YourContract",
-    functionName: "setGreeting",
-    args: [newGreeting],
-    value: "0.01",
-    onBlockConfirmation: txnReceipt => {
-      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-    },
-  });
+  const isLoading = false;
+  const writeAsync = () => {
+    console.log("writeAsync called");
+  };
+
+  // const { writeAsync, isLoading } = useScaffoldContractWrite({
+  //   contractName: CONTRACT_NAME,
+  //   functionName: "setGreeting",
+  //   args: [newGreeting],
+  //   value: "0.01",
+  //   onBlockConfirmation: txnReceipt => {
+  //     console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+  //   },
+  // });
 
   return (
     <div className="flex bg-base-300 relative pb-10">
