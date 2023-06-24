@@ -85,6 +85,11 @@ contract Copix is ERC721, Ownable {
     return ((y * canvasWidth) + x);
   }
 
+  // TODO: create private function to update metadata given token id and new color
+
+
+  // TODO: getTokenUri override function that returns the latest color + timestamp
+
   // TODO: sybil resistance from world coin
   // return: human nullifier hash
   function verifyHumanity() private pure returns (uint256){
