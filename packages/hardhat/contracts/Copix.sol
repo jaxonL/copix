@@ -63,6 +63,7 @@ contract Copix is ERC721, Ownable {
 
   // Constructor: Called once on contract deployment
   // Check packages/hardhat/deploy/00_deploy_your_contract.ts
+  // TODO: enforce groupd id in constructor
   /**
    * @param _worldId The WorldID instance that will verify the proofs
    * @param _appId The World ID app ID
@@ -79,21 +80,22 @@ contract Copix is ERC721, Ownable {
   }
 
   function paint(
-    uint256 x, uint256 y, string memory color,
+    uint256 x, uint256 y, string calldata color,
     address signal, uint256 root, uint256 humanNullifierHash, uint256[8] calldata proof
   ) public {
     // sure why not let's keep this
     require(bytes(color).length == 7, "color must be a hex string of length 7");
     uint256 tokenId = _getTokenIdFromPixel(x, y);
 
-    uint256 humanityCode = _verifyHumanity(signal, root, humanNullifierHash, proof);
+    uint8 humanityCode = _verifyHumanity(signal, root, humanNullifierHash, proof);
 
     // TODO: better error message
     require(lastEditTime[humanNullifierHash] + cooldownTime < block.timestamp, "Paint: user cooldown not finished");
     lastEditTime[humanNullifierHash] = block.timestamp;
     humanEdits[humanNullifierHash] += 1;
 
-    // TODO: create/update token metadata
+    // create/update token metadata
+    _updatePixel(tokenId, humanityCode, color);
 
     // update actual ownership of pixel
     if (tokenIdToOwner[tokenId] == address(0)) {
@@ -114,13 +116,24 @@ contract Copix is ERC721, Ownable {
     return ((y * canvasWidth) + x);
   }
 
-  // TODO: create private function to update metadata given token id and new color
-  function updatePixel(uint256 tokenId, uint256 timeStamp, uint8 editedByHuman, string calldata newColor) private {
-    Pixel storage pixel = pixels[tokenId];
-    pixel.color.push(newColor);
-    pixel.editTimestamp.push(block.timestamp);
-    pixel.editedByHuman.push(editedByHuman);
+  /**
+   * updates or creates a pixel's metadata
+   * @param tokenId id of token
+   * @param editedByHuman 1 if edited by phone, 2 if edited by human
+   * @param newColor new color hex code
+   */
+  function _updatePixel(uint256 tokenId, uint8 editedByHuman, string calldata newColor) private {
+    /** since we're using 0-indexed, cannot rely on tokenid 0 check, so have to check ownership existence */
+    if (tokenIdToOwner[tokenId] == address(0)) {
+      // create new pixel
+      Pixel memory pixel;
+      pixel.tokenId = tokenId;
+      pixels[tokenId] = pixel;
+    }
 
+    pixels[tokenId].color.push(newColor);
+    pixels[tokenId].editTimestamp.push(block.timestamp);
+    pixels[tokenId].editedByHuman.push(editedByHuman);
   }
 
 
