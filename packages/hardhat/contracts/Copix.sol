@@ -229,4 +229,13 @@ contract Copix is ERC721, Ownable {
    * Function that allows the contract to receive ETH
    */
   receive() external payable {}
+
+  /** override for ownerOf function */
+  function ownerOf(uint256 tokenId) public view virtual override returns (address) {
+    address owner = tokenIdToOwner[tokenId];
+    require(owner != address(0), "ERC721: owner query for nonexistent token");
+    return owner;
+  }
+
+  // TODO: view current state of canvas
 }
