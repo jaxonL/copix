@@ -1,13 +1,20 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+// import { WORLD_APP_CONTRACT, WORLD_APP_ID, WORLD_APP_SIGNAL } from "./constants";
+
+// // modify this to change the chain id
+// const chainId = 80001;
+// const canvasWidth = 5;
+// const canvasHeight = 5;
+// const timeoutInSeconds = 30;
 
 /**
- * Deploys a contract named "YourContract" using the deployer account and
+ * Deploys a contract named "Copix" using the deployer account and
  * constructor arguments set to the deployer address
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployCopix: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   /*
     On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
 
@@ -21,10 +28,17 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
+  await deploy("Copix", {
     from: deployer,
     // Contract constructor arguments
-    args: [deployer],
+    args: [
+      30,
+      5,
+      5,
+      "0xABB70f7F39035586Da57B3c8136035f87AC0d2Aa",
+      "app_staging_72489f615991623242b7bdc82eb8618e",
+      "paint",
+    ],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -32,11 +46,11 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
 
   // Get the deployed contract
-  // const yourContract = await hre.ethers.getContract("YourContract", deployer);
+  // const copixContract = await hre.ethers.getContract("Copix", deployer);
 };
 
-export default deployYourContract;
+export default deployCopix;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+// e.g. yarn deploy --tags Copix
+deployCopix.tags = ["Copix"];
