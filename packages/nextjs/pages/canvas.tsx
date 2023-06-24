@@ -1,14 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as PIXI from "pixi.js";
 
-// interface PixiAppProps {
-//   parentRef: React.RefObject<HTMLDivElement>;
-// }
-
-// const PixiApp: React.FC<PixiAppProps> = ({ parentRef }) => {
-//   return null;
-// };
-
 const CanvasComponent: React.FC = () => {
   const colors = [
     "white", // #ffffff
