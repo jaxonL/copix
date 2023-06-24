@@ -56,9 +56,14 @@ contract Copix is ERC721, Ownable {
   // Modifier: used to define a set of rules that must be met before or after a function is executed
   // Check the withdraw() function
   modifier isOwner() {
-      // msg.sender: predefined variable that represents address of the account that called the current function
-      require(msg.sender == owner(), "Not the Owner");
-      _;
+    // msg.sender: predefined variable that represents address of the account that called the current function
+    require(msg.sender == owner(), "Not the Owner");
+    _;
+  }
+
+  modifier onlyContract() {
+    require(msg.sender == address(this), "Not the Copix contract");
+    _;
   }
 
   // Constructor: Called once on contract deployment
@@ -99,13 +104,13 @@ contract Copix is ERC721, Ownable {
 
     // update actual ownership of pixel
     if (tokenIdToOwner[tokenId] == address(0)) {
-      tokenIdToOwner[tokenId] = msg.sender;
       _safeMint(msg.sender, tokenId);
     } else {
       // transfer to new owner
       safeTransferFrom(tokenIdToOwner[tokenId], msg.sender, tokenId);
       // TODO: milestone 2: mint new token representing current state of canvas to previous owner
     }
+    tokenIdToOwner[tokenId] = msg.sender;
   }
 
   function _getTokenIdFromPixel(uint256 x, uint256 y) private view returns (uint256) {
@@ -230,17 +235,11 @@ contract Copix is ERC721, Ownable {
     );
   }
 
-  function mint(address to) public onlyOwner {
-      _tokenId += 1;
-      _safeMint(to, _tokenId);
-  }
-
   function getTokenId() public view returns (uint256) {
       return _tokenId;
   }
 
-  // TODO: enforce safe transfer to only be allowed to be called from this contract
-  function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public virtual override {
+  function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public virtual override onlyContract {
     super.safeTransferFrom(from, to, tokenId, _data);
   }
 
