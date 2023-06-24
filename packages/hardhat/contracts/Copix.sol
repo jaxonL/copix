@@ -91,7 +91,7 @@ contract Copix is ERC721, Ownable {
     
     Pixel storage pixel = pixels[tokenId];
     pixel.color.push(newColor);
-    pixel.editTimestamp.push(block.timeStamp);
+    pixel.editTimestamp.push(block.timestamp);
     pixel.editedByHuman.push(editedByHuman);
 
   }
