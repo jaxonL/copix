@@ -66,6 +66,10 @@ const CanvasComponent = (): JSX.Element => {
     return result;
   }, [grid]);
 
+  function onPixelClicked(pixelId: number) {
+    console.log("Pixel clicked:", pixelId);
+  }
+
   // function renderPixel(g: any, pos: string, pixel: { color: string }) {
   //   const [x, y] = pos.split(":").map(Number);
   //   g.beginFill(parseInt(pixel.color.slice(1), 16));
@@ -164,7 +168,7 @@ const CanvasComponent = (): JSX.Element => {
       <div
         id="canvas"
         ref={canvasRef}
-        className={"absolute top-0 bottom-16 left-0 right-0 grid"}
+        className={"grid"}
         style={{
           gridTemplateColumns: `repeat(${height},${pixelSize}px)`,
           gridTemplateRows: `repeat(${width},${pixelSize}px)`,
@@ -172,13 +176,7 @@ const CanvasComponent = (): JSX.Element => {
       >
         {canvasGrid.map((row, i) => {
           return row.map((pixel, j) => (
-            <Pixel
-              key={`${i}:${j}`}
-              color={pixel.color}
-              onClick={() => {
-                console.log("was clicked!");
-              }}
-            />
+            <Pixel key={`${i}:${j}`} color={pixel.color} onClick={onPixelClicked.bind(null, i * width + j)} />
           ));
         })}
       </div>

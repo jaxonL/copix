@@ -6,12 +6,12 @@ interface PixelProps {
 const Pixel: React.FC<PixelProps> = ({ color, onClick }) => {
   return (
     <div
-      className={`h-5 w-5 bg-${color}`}
+      className="h-full w-full"
       style={{
         backgroundColor: color,
       }}
       onClick={onClick}
-    ></div>
+    />
   );
 };
 export default Pixel;
