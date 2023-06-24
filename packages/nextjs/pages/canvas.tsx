@@ -1,4 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
+import Pixel from "./Pixel";
 
 interface PixelMetadata {
   color: string;
@@ -171,7 +172,13 @@ const CanvasComponent = (): JSX.Element => {
       >
         {canvasGrid.map((row, i) => {
           return row.map((pixel, j) => (
-            <div key={`${i}:${j}`} className="block w-full h-full" style={{ backgroundColor: pixel.color }}></div>
+            <Pixel
+              key={`${i}:${j}`}
+              color={pixel.color}
+              onClick={() => {
+                console.log("was clicked!");
+              }}
+            />
           ));
         })}
       </div>

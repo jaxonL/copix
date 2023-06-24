@@ -4,6 +4,14 @@ interface PixelProps {
 }
 
 const Pixel: React.FC<PixelProps> = ({ color, onClick }) => {
-  return <div className={`h-5 w-5 bg-${color}`} onClick={onClick}></div>;
+  return (
+    <div
+      className={`h-5 w-5 bg-${color}`}
+      style={{
+        backgroundColor: color,
+      }}
+      onClick={onClick}
+    ></div>
+  );
 };
 export default Pixel;
