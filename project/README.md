@@ -1,2 +1,0 @@
-# copix
-Collaborative pixel-pushing
