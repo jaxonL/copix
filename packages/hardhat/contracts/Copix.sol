@@ -11,10 +11,10 @@ contract Copix is ERC721, Ownable {
   uint256 private _tokenId;
 
   struct Pixel {
-    uint tokenId;
+    uint256 tokenId;
     uint256[] editTimestamp;
     string[] color;
-    uint[] editedByHuman;
+    uint8[] editedByHuman;
   }
 
   // State Variables
@@ -26,9 +26,10 @@ contract Copix is ERC721, Ownable {
   string public greeting = "Building Unstoppable Apps!!!";
   bool public premium = false;
   uint256 public totalCounter = 0;
-  mapping(string => uint) public lastEditTime;
-  mapping(string => uint) public humanEdits;
+  mapping(string => uint256) public lastEditTime;
+  mapping(string => uint256) public humanEdits;
   mapping(uint256 => address) public tokenIdToOwner; // similar to _owners
+  mapping(uint256 => Pixel) public pixels;
 
   // Events: a way to emit log statements from smart contract that can be listened to by external parties
   event GreetingChange(address indexed greetingSetter, string newGreeting, bool premium, uint256 value);
@@ -50,13 +51,13 @@ contract Copix is ERC721, Ownable {
     canvasHeight = _height;
   }
 
-  function paint(uint x, uint y, string memory color, string memory humanNullifierHash) public {
+  function paint(uint256 x, uint256 y, string memory color, string memory humanNullifierHash) public {
     // sure why not let's keep this
     require(bytes(color).length == 7, "color must be a hex string of length 7");
-    uint tokenId = _getTokenIdFromPixel(x, y);
+    uint256 tokenId = _getTokenIdFromPixel(x, y);
 
     // TODO: pass in appropriate values
-    uint humanityCode = verifyHumanity();
+    uint256 humanityCode = verifyHumanity();
 
     // TODO: better error message
     require(lastEditTime[humanNullifierHash] + cooldownTime < block.timestamp, "Paint: user cooldown not finished");
@@ -77,7 +78,7 @@ contract Copix is ERC721, Ownable {
   }
 
 
-  function _getTokenIdFromPixel(uint x, uint y) private pure returns (uint256) {
+  function _getTokenIdFromPixel(uint256 x, uint256 y) private pure returns (uint256) {
     // TODO: check less than width/height
     require(x >= canvasWidth, "x must be less than canvas width limit");
     require(y >= canvasHeight, "y must be less than canvas height limit");
@@ -86,9 +87,36 @@ contract Copix is ERC721, Ownable {
   }
 
   // TODO: create private function to update metadata given token id and new color
+  function updatePixel(uint256 tokenId, uint256 timeStamp, uint8 editedByHuman, string calldata newColor) private {
+    
+    Pixel storage pixel = pixels[tokenId];
+    pixel.color.push(newColor);
+    pixel.editTimestamp.push(block.timeStamp);
+    pixel.editedByHuman.push(editedByHuman);
+
+  }
 
 
   // TODO: getTokenUri override function that returns the latest color + timestamp
+  // function tokenUri(uint256 tokenId) public view override returns (string memory) {
+  //   require(_exists(tokenId), "Pixel does not exist");
+  //   string memory colour = colours[tokenId];
+  //   string memory baseURI = "https://example.com/tokens/";
+  //   string memory tokenURISuffix = ".json";
+  //   string memory json = string(
+  //       abi.encodePacked(
+  //           '{ "color": "', latestColor,
+  //           '", "timestamp": ', uint256ToString(latestTimestamp),
+  //           ' }'
+  //       )
+
+  //   return string(abi.encodePacked('data:application/json;utf8,{"name":"Copix pixel #'tokenId'", "description":"TEMPUS EDAX RERUM\\n',
+  //         ((block.timestamp-_creationTimestamp)/86400).toString(),'", "created_by":"Pak", "image":"',
+  //           _generateImage(distance, completion, c1curve, c2curve, randHue, randOffset),
+  //           '"}'));    
+  //   return string(abi.encodePacked("data:application/json;utf8,{", tokenId.toString(), tokenURISuffix));
+
+  // }
 
   // TODO: sybil resistance from world coin
   // return: human nullifier hash
