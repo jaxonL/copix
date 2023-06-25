@@ -82,9 +82,9 @@ const CanvasComponent = (): JSX.Element => {
           gridTemplateRows: `repeat(${width},${pixelSize}px)`,
         }}
       >
-        {canvasGrid.map((row, i) => {
-          return row.map((pixel, j) => (
-            <Pixel key={`${i}:${j}`} color={pixel.color} onClick={onPixelClicked.bind(null, i * width + j)} />
+        {canvasGrid.map((row, y) => {
+          return row.map((pixel, x) => (
+            <Pixel key={`${x}:${y}`} color={pixel.color} onClick={onPixelClicked.bind(null, y * width + x)} />
           ));
         })}
       </div>
