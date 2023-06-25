@@ -1,9 +1,16 @@
 // import Link from "next/link";
 import type { NextPage } from "next";
+import { useDarkMode } from "usehooks-ts";
 // import { BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 
+const defaultClassName = "my-12 py-8 px-16 max-w-6xl duration-150 rounded-lg hover:shadow-lg";
+
 const Home: NextPage = () => {
+  const { isDarkMode } = useDarkMode();
+
+  const bgClass = isDarkMode ? "bg-gray-900" : "bg-white";
+
   return (
     <>
       <MetaHeader />
@@ -18,7 +25,7 @@ const Home: NextPage = () => {
               {/* Uniting the Web3 community one pixel at a time. */}
             </span>
           </h1>
-          <div className="my-12 py-8 px-16 max-w-6xl bg-white duration-150 rounded-lg hover:shadow-lg">
+          <div className={defaultClassName + " " + bgClass}>
             <p
               style={{
                 lineHeight: "3",
