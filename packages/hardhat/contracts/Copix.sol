@@ -114,6 +114,41 @@ contract Copix is ERC721, Ownable {
     emit PixelUpdate(msg.sender, x, y, color, block.timestamp, humanityCode);
   }
 
+  /**
+   * safe as paint, but without the verification because sad times
+   */
+  function unsafePaint(
+    uint256 x, uint256 y, string calldata color,
+    uint256 humanNullifierHash
+  ) public {
+    // sure why not let's keep this
+    require(bytes(color).length == 7, "color must be a hex string of length 7");
+    uint256 tokenId = _getTokenIdFromPixel(x, y);
+
+    uint8 humanityCode = 0;
+
+    // TODO: better error message
+    require(lastEditTime[humanNullifierHash] + cooldownTime < block.timestamp, "Paint: user cooldown not finished");
+    lastEditTime[humanNullifierHash] = block.timestamp;
+    humanEdits[humanNullifierHash] += 1;
+
+    // create/update token metadata
+    _updatePixel(tokenId, humanityCode, color);
+
+    // update actual ownership of pixel
+    if (tokenIdToOwner[tokenId] == address(0)) {
+      _safeMint(msg.sender, tokenId);
+    } else {
+      // transfer to new owner
+      safeTransferFrom(tokenIdToOwner[tokenId], msg.sender, tokenId);
+      // TODO: milestone 2: mint new token representing current state of canvas to previous owner
+    }
+    tokenIdToOwner[tokenId] = msg.sender;
+
+    // emit paint event
+    emit PixelUpdate(msg.sender, x, y, color, block.timestamp, humanityCode);
+  }
+
   function _getTokenIdFromPixel(uint256 x, uint256 y) private view returns (uint256) {
     // TODO: check less than width/height
     require(x >= canvasWidth, "x must be less than canvas width limit");

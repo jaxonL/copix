@@ -51,7 +51,6 @@ const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setCo
       BigNumber.from(x ?? 0),
       BigNumber.from(y ?? 0),
       color,
-      data?.address,
       paintArgs.root,
       paintArgs.humanNullifierHash,
       paintArgs.proof,

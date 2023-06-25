@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Copix: {
-          address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
           abi: [
             {
               inputs: [
@@ -288,6 +288,19 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [],
+              name: "currentState",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
               inputs: [
                 {
                   internalType: "uint256",
@@ -444,11 +457,6 @@ const contracts = {
                   type: "string",
                 },
                 {
-                  internalType: "address",
-                  name: "signal",
-                  type: "address",
-                },
-                {
                   internalType: "uint256",
                   name: "root",
                   type: "uint256",
@@ -600,6 +608,25 @@ const contracts = {
               inputs: [
                 {
                   internalType: "uint256",
+                  name: "tokenId",
+                  type: "uint256",
+                },
+              ],
+              name: "tokenData",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
                   name: "",
                   type: "uint256",
                 },
@@ -692,10 +719,33 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "address",
-                  name: "signal",
-                  type: "address",
+                  internalType: "uint256",
+                  name: "x",
+                  type: "uint256",
                 },
+                {
+                  internalType: "uint256",
+                  name: "y",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "color",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "humanNullifierHash",
+                  type: "uint256",
+                },
+              ],
+              name: "unsafePaint",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
                 {
                   internalType: "uint256",
                   name: "root",
@@ -739,7 +789,7 @@ const contracts = {
       name: "polygonMumbai",
       contracts: {
         Copix: {
-          address: "0x34da429401F9B4689d56eDf1939fbE0d903eb84b",
+          address: "0x2b154a8028E849E4184DA47c3f319D67dC33C0FC",
           abi: [
             {
               inputs: [
@@ -1022,6 +1072,19 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [],
+              name: "currentState",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
               inputs: [
                 {
                   internalType: "uint256",
@@ -1178,11 +1241,6 @@ const contracts = {
                   type: "string",
                 },
                 {
-                  internalType: "address",
-                  name: "signal",
-                  type: "address",
-                },
-                {
                   internalType: "uint256",
                   name: "root",
                   type: "uint256",
@@ -1334,6 +1392,25 @@ const contracts = {
               inputs: [
                 {
                   internalType: "uint256",
+                  name: "tokenId",
+                  type: "uint256",
+                },
+              ],
+              name: "tokenData",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
                   name: "",
                   type: "uint256",
                 },
@@ -1426,10 +1503,33 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "address",
-                  name: "signal",
-                  type: "address",
+                  internalType: "uint256",
+                  name: "x",
+                  type: "uint256",
                 },
+                {
+                  internalType: "uint256",
+                  name: "y",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "color",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "humanNullifierHash",
+                  type: "uint256",
+                },
+              ],
+              name: "unsafePaint",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
                 {
                   internalType: "uint256",
                   name: "root",

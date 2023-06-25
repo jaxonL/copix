@@ -4,9 +4,9 @@ import { DeployFunction } from "hardhat-deploy/types";
 
 // // modify this to change the chain id
 // const chainId = 80001;
-// const canvasWidth = 5;
-// const canvasHeight = 5;
-// const timeoutInSeconds = 30;
+const canvasWidth = 30;
+const canvasHeight = 20;
+const timeoutInSeconds = 30;
 
 /**
  * Deploys a contract named "Copix" using the deployer account and
@@ -32,10 +32,10 @@ const deployCopix: DeployFunction = async function (hre: HardhatRuntimeEnvironme
     from: deployer,
     // Contract constructor arguments
     args: [
-      30,
-      5,
-      5,
-      "0xABB70f7F39035586Da57B3c8136035f87AC0d2Aa",
+      timeoutInSeconds,
+      canvasWidth,
+      canvasHeight,
+      "0x719683F13Eeea7D84fCBa5d7d17Bf82e03E3d260",
       "app_staging_72489f615991623242b7bdc82eb8618e",
       "paint",
     ],

@@ -15,7 +15,7 @@ export const WorldCoinConnectButton = () => {
   return (
     <IDKitWidget
       action={action}
-      signal="my_signal"
+      signal="1"
       onSuccess={onSuccess}
       app_id={app_id}
       credential_types={credential_types}

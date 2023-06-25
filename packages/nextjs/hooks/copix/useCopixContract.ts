@@ -72,7 +72,7 @@ export const useCopixVerifyHumanity = (worldIdProof: ISuccessResult | null, addr
   return useScaffoldContractRead({
     contractName: CONTRACT_NAME,
     functionName: "verifyHumanityCheck",
-    args: [address, actualRoot, actualHumanNullifierHash, unpackedProof as any],
+    args: [actualRoot, actualHumanNullifierHash, unpackedProof as any],
     enabled: !!worldIdProof && !!address && !!unpackedProof && !!root && !!humanNullifierHash,
   });
 };
