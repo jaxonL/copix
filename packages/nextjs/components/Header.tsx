@@ -112,10 +112,10 @@ export const Header = () => {
       <div className="flex items-center justify-center">
         <Image src="/copix_logo.png" width={300} height={300} alt="CoPix Logo" />
       </div>
-      <div className="navbar-end flex-grow mr-4">
-        <p className="ml-4">{!currentUser && <RainbowKitCustomConnectButton />}</p>
+      <div className="navbar-end flex-grow mr-4 gap-4">
+        <RainbowKitCustomConnectButton />
         <FaucetButton />
-        <p className="ml-4">{(currentUser && "Humanity Verified") || <WorldCoinConnectButton />}</p>
+        {(currentUser && "Humanity Verified") || <WorldCoinConnectButton />}
       </div>
     </div>
   );
