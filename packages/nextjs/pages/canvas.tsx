@@ -5,8 +5,10 @@ import SignInPrompt from "./sign_in_prompt";
 // import { BigNumber } from "ethers";
 import { useAccount } from "wagmi";
 import { AuthContext } from "~~/components/copix/AuthContext";
+import { useCopixPixelUpdateEventSubscriber } from "~~/hooks/copix/useCopixContract";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { CONTRACT_NAME, Humanity } from "~~/utils/constants";
+import { notification } from "~~/utils/scaffold-eth";
 
 interface PixelXY {
   x: number;
@@ -76,6 +78,15 @@ const CanvasComponent = (): JSX.Element => {
   const { data: canvasState, isLoading: loadingCanvasState } = useScaffoldContractRead({
     contractName: CONTRACT_NAME,
     functionName: "currentState",
+  });
+
+  function listener(painter: string, x: number, y: number, newColor: string, timestamp: Date, editedByHuman: Humanity) {
+    notification.info(painter + " just painted!");
+    console.log(painter, x, y, newColor, timestamp, editedByHuman);
+  }
+
+  useCopixPixelUpdateEventSubscriber({
+    listener,
   });
 
   const canvasRef = useRef<HTMLDivElement>(null);
