@@ -1,6 +1,7 @@
-import { useScaffoldContractWrite, useScaffoldEventSubscriber } from "../scaffold-eth";
+import { useScaffoldContractWrite, useScaffoldEventHistory, useScaffoldEventSubscriber } from "../scaffold-eth";
 import { BigNumber } from "ethers";
-import { CONTRACT_NAME } from "~~/utils/constants";
+import { CONTRACT_NAME, Humanity, PIXEL_UPDATE_EVENT, toHumanity } from "~~/utils/constants";
+import { UseScaffoldEventHistoryConfig } from "~~/utils/scaffold-eth/contract";
 
 type BigNumberProof = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber];
 
@@ -54,13 +55,41 @@ export const useCopixPaint = ({ x, y, color, worldIdProof }: CopixPaintArgs) => 
   });
 };
 
+interface CopixPixelUpdateArgs {
+  listener: (painter: string, x: number, y: number, newColor: string, timestamp: Date, editedByHuman: Humanity) => void;
+  once?: boolean;
+}
+
 /** subscribes to the PixelUpdate event */
-export const useCopixPixelUpdateEventSubscriber = () => {
+export const useCopixPixelUpdateEventSubscriber = ({ listener, once }: CopixPixelUpdateArgs) => {
   return useScaffoldEventSubscriber({
     contractName: CONTRACT_NAME,
-    eventName: "PixelUpdate",
-    listener: (painter, x, y, newColor, timestamp, editedByHuman) => {
-      console.log(painter, x, y, newColor, timestamp, editedByHuman);
+    eventName: PIXEL_UPDATE_EVENT,
+    listener(...args) {
+      const [painter, x, y, newColor, timestamp, editedByHuman] = args;
+      listener(
+        painter,
+        x.toNumber(),
+        y.toNumber(),
+        newColor,
+        new Date(timestamp.toNumber() * 1000),
+        toHumanity(editedByHuman),
+      );
     },
+    once,
+  });
+};
+
+/** fetches PixelUpdate history */
+export const useCopixPixelUpdateHistory = (
+  config: Omit<
+    UseScaffoldEventHistoryConfig<typeof CONTRACT_NAME, typeof PIXEL_UPDATE_EVENT>,
+    "contractName" | "eventName"
+  >,
+) => {
+  return useScaffoldEventHistory({
+    contractName: CONTRACT_NAME,
+    eventName: PIXEL_UPDATE_EVENT,
+    ...config,
   });
 };
