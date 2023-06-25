@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { WorldCoinConnectButton } from "./copix/WorldCoinConnectButton";
-import { Bars3Icon, MagnifyingGlassIcon, PaintBrushIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, PaintBrushIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
@@ -61,9 +61,9 @@ export const Header = () => {
           Block Explorer
         </NavLink>
       </li> */}
-      <li>
+      <li className="mt-2">
         <NavLink href="/about">
-          <MagnifyingGlassIcon className="h-4 w-4" />
+          <SparklesIcon className="h-4 w-4" />
           About
         </NavLink>
       </li>
@@ -86,7 +86,7 @@ export const Header = () => {
           {isDrawerOpen && (
             <ul
               tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-compact dropdown-content mt-7 p-2 shadow bg-base-100 rounded-box w-52"
               onClick={() => {
                 setIsDrawerOpen(false);
               }}

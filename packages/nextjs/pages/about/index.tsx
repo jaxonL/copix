@@ -13,20 +13,20 @@ const Home: NextPage = () => {
           <h1 className="text-center mb-8">
             <span className="block text-6xl mb-2">👨‍🎨</span>
             <span className="block text-6xl font-bold mt-5">CoPix</span>
-            <span className="block text-xl mt-10">
+            <span className="block text-xl mt-10 font-bold">
               A public canvas where anyone can create art one pixel at a time.
               {/* Uniting the Web3 community one pixel at a time. */}
             </span>
           </h1>
-          <div className="mt-10 my-12 mx-3 max-w-6xl border border-gray-300 p-6 rounded-lg">
+          <div className="my-12 py-8 px-16 max-w-6xl bg-white duration-150 rounded-lg hover:shadow-lg">
             <p
               style={{
                 lineHeight: "3",
               }}
             >
               <div>
-                {" "}
-                Copix is a public canvas built on Polygon testnet Mumbai, where each pixel is a non-fungible token.{" "}
+                <b>Copix</b> is a public canvas built on Polygon testnet Mumbai, where each pixel is a non-fungible
+                token.{" "}
               </div>
               <div>
                 {" "}
