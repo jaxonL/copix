@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Copix: {
-          address: "0x68B1D87F95878fE05B998F19b66F4baba5De1aed",
+          address: "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
           abi: [
             {
               inputs: [
@@ -789,7 +789,7 @@ const contracts = {
       name: "polygonMumbai",
       contracts: {
         Copix: {
-          address: "0x6Cf1af6D048aB7c9cCC7F35318Cdd9e0bE15B818",
+          address: "0xE049de34d004F799b8302FeAeD15EE743F6A4293",
           abi: [
             {
               inputs: [

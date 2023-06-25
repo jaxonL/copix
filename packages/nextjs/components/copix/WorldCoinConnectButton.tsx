@@ -4,7 +4,7 @@ import { CredentialType, IDKitWidget, ISuccessResult } from "@worldcoin/idkit";
 import { AuthContext } from "~~/components/copix/AuthContext";
 
 const action = "paint";
-const app_id = "app_staging_e37599212a8ec2e551684f70564c8041";
+const app_id = "app_c43feb41170563f6a0606c914a4766b6";
 
 export const WorldCoinConnectButton = () => {
   const credential_types = [CredentialType.Orb, CredentialType.Phone];

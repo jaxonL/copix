@@ -19,4 +19,4 @@ We leveraged the Anonymous Action feature of World ID to verify whether or not t
 * Add feature to see number of humans contributed to the canvas
 
 ## Polygonscan contract
-Our latest version of the contract can be found on Polygon's Mumbai tesnet at https://mumbai.polygonscan.com/address/0x6Cf1af6D048aB7c9cCC7F35318Cdd9e0bE15B818 .
+Our latest versions of the contract can be found on Polygon's Mumbai tesnet at https://mumbai.polygonscan.com/address/0xE049de34d004F799b8302FeAeD15EE743F6A4293 (production WorldID verification) and https://mumbai.polygonscan.com/address/0x6Cf1af6D048aB7c9cCC7F35318Cdd9e0bE15B818 (simulator WorldID verification).

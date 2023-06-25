@@ -36,7 +36,7 @@ const deployCopix: DeployFunction = async function (hre: HardhatRuntimeEnvironme
       canvasWidth,
       canvasHeight,
       "0x719683F13Eeea7D84fCBa5d7d17Bf82e03E3d260",
-      "app_staging_72489f615991623242b7bdc82eb8618e",
+      "app_c43feb41170563f6a0606c914a4766b6",
       "paint",
     ],
     log: true,
