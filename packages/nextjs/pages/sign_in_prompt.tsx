@@ -9,7 +9,7 @@ interface SignInPromptProps {
 const SignInPrompt: React.FC<SignInPromptProps> = ({ showSignIn, closeSignIn }) => {
   return (
     <>
-      <Transition appear show={showSignIn} as={Fragment}>
+      <Transition appear show={!!showSignIn} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeSignIn}>
           <Transition.Child
             as={Fragment}

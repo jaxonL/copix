@@ -98,7 +98,7 @@ const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setCo
 
   return (
     <>
-      <Transition appear show={showModal} as={Fragment}>
+      <Transition appear show={!!showModal} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}

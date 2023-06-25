@@ -8094,7 +8094,6 @@ __metadata:
   dependencies:
     "@types/react": ^18.0.9
     "@types/react-color": ^2
-    gsap: ^3.12.1
     husky: ^8.0.1
     lint-staged: ^13.0.3
     node-gyp: ^9.4.0
@@ -11450,13 +11449,6 @@ __metadata:
   version: 1.10.5
   resolution: "growl@npm:1.10.5"
   checksum: 4b86685de6831cebcbb19f93870bea624afee61124b0a20c49017013987cd129e73a8c4baeca295728f41d21265e1f859d25ef36731b142ca59c655fea94bb1a
-  languageName: node
-  linkType: hard
-
-"gsap@npm:^3.12.1":
-  version: 3.12.1
-  resolution: "gsap@npm:3.12.1"
-  checksum: 1d7051074ad4351fe76971ea133b0d95c0a6fb330cd0237917f63eff7bc10b32475d909c5960141761b0d7a8d9d50197b2df4f3e179dbcec817e0f6b385cda98
   languageName: node
   linkType: hard
 
