@@ -1,5 +1,5 @@
 # CoPix
-# Collaborative pixel-pushing, a public canvas where anyone can create art one pixel at a time.
+## Collaborative pixel-pushing, a public canvas where anyone can create art one pixel at a time.
 
 https://copix-loo.vercel.app/
 
@@ -9,11 +9,14 @@ To maintain a balanced and fair environment, Copix implements a thoughtful coold
 
 In addition to the creative process, Copix offers a captivating journey through pixel history. Users can delve into the extensive metadata records, revealing the fascinating evolution of each pixel over time. This comprehensive history includes past colors chosen, the individuals who contributed and the timestamp of all the activities. With every stroke of color, Copix becomes an ever-evolving masterpiece, shaped collectively by the artistic Web3 community.
 
-# How Copix was made
+## How Copix was made
 Copix is deployed on the Polygon testnet Mumbai. 
 We used Solidity to write the smart contract for creating and updating the pixel tokens, as well as specifying user actions. We used React to build the frontend webpage. 
 We leveraged the Anonymous Action feature of World ID to verify whether or not the user painting is a human. 
 
-# Future considerations
+## Future considerations
 * Add feature to see all previous versions of the canvas
 * Add feature to see number of humans contributed to the canvas
+
+## Polygonscan contract
+Our latest version of the contract can be found on Polygon's Mumbai tesnet at https://mumbai.polygonscan.com/address/0x6Cf1af6D048aB7c9cCC7F35318Cdd9e0bE15B818 .
