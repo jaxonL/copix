@@ -31,25 +31,6 @@ const width = 20;
 const height = 25;
 
 const CanvasComponent = (): JSX.Element => {
-  const colors = [
-    "white", // #ffffff
-    // "rose-950",
-    "gray-200", // #e4e4e4
-    "gray-500", // #888888
-    "gray-900", // #222222
-    "pink-300", // #ffa7d1
-    "red-600", // #e50000
-    "yellow-600", // #e59500
-    "yellow-700", // #a06a42
-    "yellow-400", // #e5d900
-    "lime-400", // #94e044
-    "green-500", // #02be01
-    "cyan-400", // #00d3dd
-    "blue-500", // #0083c7
-    "blue-700", // #0000ea
-    "purple-400", // #cf6ee4
-    "purple-700", // #820080
-  ];
   const [showModal, setShowModal] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [selectedPixel, setSelectedPixel] = useState<PixelXY | object>({});
@@ -109,7 +90,7 @@ const CanvasComponent = (): JSX.Element => {
     <>
       <Modal {...selectedPixel} showModal={showModal} closeModal={closeModal} color={color} setColor={setColor} />
       <SignInPrompt showSignIn={showSignIn} closeSignIn={closeSignIn} />
-      <div className="h-screen bg-gray-300 overflow-hidden font-lato select-none flex items-center justify-center">
+      <div className="h-full bg-gray-300 overflow-hidden font-lato select-none flex items-center justify-center">
         <div
           id="canvas"
           ref={canvasRef}
@@ -117,6 +98,7 @@ const CanvasComponent = (): JSX.Element => {
           style={{
             gridTemplateColumns: `repeat(${height},${pixelSize}px)`,
             gridTemplateRows: `repeat(${width},${pixelSize}px)`,
+            border: "1px solid black",
           }}
         >
           {canvasGrid.map((row, y) => {
@@ -127,11 +109,11 @@ const CanvasComponent = (): JSX.Element => {
         </div>
 
         <div className="controls absolute left-0 right-0 bottom-0 bg-gray-800 p-0 flex items-center justify-between overflow-hidden">
-          <ul id="colors" className="m-0 p-2 flex-1 text-center transition-transform duration-500 ease-in-out relative">
+          {/* <ul id="colors" className="m-0 p-2 flex-1 text-center transition-transform duration-500 ease-in-out relative">
             {colors.map(color => (
               <li key={color} id={`c-${color}`} className={`w-6 h-6 inline-block list-none m-0 bg-${color} mr-1`}></li>
             ))}
-          </ul>
+          </ul> */}
 
           <div className="face-space w-16"></div>
         </div>

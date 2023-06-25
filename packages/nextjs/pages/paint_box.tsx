@@ -77,6 +77,7 @@ const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setCo
       return;
     }
     await writeAsync();
+    /// actually create transaction
     closeModal();
   }
 
