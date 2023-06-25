@@ -11,3 +11,7 @@ In addition to the creative process, Copix offers a captivating journey through 
 Copix is deployed on the Polygon testnet Mumbai. 
 We used Solidity to write the smart contract for creating and updating the pixel tokens, as well as specifying user actions. We used React to build the frontend webpage. 
 We leveraged the Anonymous Action feature of World ID to verify whether or not the user painting is a human. 
+
+# Future considerations
+* Add feature to see all previous versions of the canvas
+* Make pixel tokens displayable on OpenSea
