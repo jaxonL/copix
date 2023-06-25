@@ -1,7 +1,15 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import ColorPicker from "./color_picker";
 import { Dialog, Transition } from "@headlessui/react";
+import { BigNumber } from "ethers";
 import { AuthContext } from "~~/components/copix/AuthContext";
+import {
+  BigNumberProof,
+  WorldIDProof,
+  transformFromSuccessToProofInput, // useCopixPaint,
+} from "~~/hooks/copix/useCopixContract";
+import { useDeployedContractInfo, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { CONTRACT_NAME } from "~~/utils/constants";
 
 interface ModalProps {
   x?: number;
@@ -13,14 +21,62 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setColor }) => {
-  console.log(color);
+  // console.log(color);
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useDeployedContractInfo(CONTRACT_NAME);
+  const [paintArgs, setPaintArgs] = useState<WorldIDProof>(
+    currentUser
+      ? transformFromSuccessToProofInput(currentUser)
+      : {
+          root: BigNumber.from(0),
+          humanNullifierHash: BigNumber.from(0),
+          proof: [
+            BigNumber.from(0),
+            BigNumber.from(0),
+            BigNumber.from(0),
+            BigNumber.from(0),
+            BigNumber.from(0),
+            BigNumber.from(0),
+            BigNumber.from(0),
+            BigNumber.from(0),
+          ] as BigNumberProof,
+        },
+  );
+  // const { signal, root, humanNullifierHash, proof } = currentUser ? transformFromSuccessToProofInput(currentUser) : {};
+
+  const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
+    contractName: CONTRACT_NAME,
+    functionName: "paint",
+    args: [
+      BigNumber.from(x ?? 0),
+      BigNumber.from(y ?? 0),
+      color,
+      data?.address,
+      paintArgs.root,
+      paintArgs.humanNullifierHash,
+      paintArgs.proof,
+    ],
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
+
+  useEffect(() => {
+    if (currentUser) {
+      setPaintArgs(transformFromSuccessToProofInput(currentUser));
+    }
+  }, [currentUser]);
 
   const { showConfetti, setShowConfetti } = useContext(AuthContext);
-
-  function paint() {
+  async function paint() {
     console.log(`Painting (${x}, ${y}) to be ${color}`);
     // Only displays confetti on the first paint
     setShowConfetti(showConfetti);
+    if (!currentUser || !data?.address) {
+      console.log("No user or contract address");
+      return;
+    }
+    await writeAsync();
     closeModal();
   }
 
@@ -66,8 +122,9 @@ const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setCo
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 mt-10 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={paint}
+                      disabled={isLoading || isMining}
                     >
-                      Create paint transaction
+                      {isLoading ? "Loading..." : isMining ? "Mining transaction..." : "Create paint transaction"}
                     </button>
                   </div>
                 </Dialog.Panel>

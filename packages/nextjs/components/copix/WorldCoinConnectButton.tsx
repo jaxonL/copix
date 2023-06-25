@@ -1,18 +1,17 @@
 import { useContext } from "react";
 import { CredentialType, IDKitWidget, ISuccessResult } from "@worldcoin/idkit";
+// import { decodeAbiParameters } from "viem";
 import { AuthContext } from "~~/components/copix/AuthContext";
+
+const action = "paint";
+const app_id = "app_staging_e37599212a8ec2e551684f70564c8041";
 
 export const WorldCoinConnectButton = () => {
   const credential_types = [CredentialType.Orb, CredentialType.Phone];
-
-  const action = "paint";
-  const app_id = "app_staging_e37599212a8ec2e551684f70564c8041";
   const { login } = useContext(AuthContext);
-
   const onSuccess = (result: ISuccessResult) => {
     login(result);
   };
-
   return (
     <IDKitWidget
       action={action}

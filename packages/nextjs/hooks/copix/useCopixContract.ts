@@ -1,57 +1,79 @@
-import { useScaffoldContractWrite, useScaffoldEventHistory, useScaffoldEventSubscriber } from "../scaffold-eth";
+import {
+  useScaffoldContractRead, // useScaffoldContractWrite,
+  useScaffoldEventHistory,
+  useScaffoldEventSubscriber,
+} from "../scaffold-eth";
+import { ISuccessResult } from "@worldcoin/idkit";
 import { BigNumber } from "ethers";
+import { decodeAbiParameters } from "viem";
 import { CONTRACT_NAME, Humanity, PIXEL_UPDATE_EVENT, toHumanity } from "~~/utils/constants";
 import { UseScaffoldEventHistoryConfig } from "~~/utils/scaffold-eth/contract";
 
-type BigNumberProof = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber];
+export type BigNumberProof = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber];
 
-interface WorldIDProof {
-  signal: string;
-  root: number;
-  humanNullifierHash: string;
-  proof: [number, number, number, number, number, number, number, number];
+export interface WorldIDProof {
+  // signal: string;
+  root: BigNumber;
+  humanNullifierHash: BigNumber;
+  readonly proof: BigNumberProof;
+}
+type Tx = Parameters<typeof decodeAbiParameters>[1];
+
+// interface CopixPaintArgs {
+//   x?: number;
+//   y?: number;
+//   color: string;
+//   worldIdProof: ISuccessResult | null;
+//   address: string;
+// }
+
+// /**
+//  * hook for paint() function in Copix contract
+//  */
+// export const useCopixPaint = ({ x, y, color, worldIdProof, address }: CopixPaintArgs) => {
+//   if (!worldIdProof) console.log("disabling paint because worldIdProof is null");
+//   const { root, humanNullifierHash, proof } = transformFromSuccessToProofInput(worldIdProof);
+
+//   return useScaffoldContractWrite({
+//     contractName: CONTRACT_NAME,
+//     functionName: "paint",
+//     args: [
+//       BigNumber.from(x),
+//       BigNumber.from(y),
+//       color,
+//       address,
+//       BigNumber.from(root),
+//       BigNumber.from(humanNullifierHash),
+//       proof,
+//     ],
+//     onBlockConfirmation: txnReceipt => {
+//       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+//     },
+//   });
+// };
+
+export function transformFromSuccessToProofInput(worldIdProof: ISuccessResult): WorldIDProof {
+  const { merkle_root: root, nullifier_hash: humanNullifierHash, proof } = worldIdProof;
+  const unpackedProof = (decodeAbiParameters([{ type: "uint256[8]" }], proof as Tx)[0] as any).map(BigNumber.from);
+  return {
+    root: BigNumber.from(root),
+    humanNullifierHash: BigNumber.from(humanNullifierHash),
+    proof: unpackedProof,
+  };
 }
 
-interface CopixPaintArgs {
-  x: number;
-  y: number;
-  color: string;
-  worldIdProof: WorldIDProof;
-}
+export const useCopixVerifyHumanity = (worldIdProof: ISuccessResult | null, address?: string) => {
+  const { merkle_root: root, nullifier_hash: humanNullifierHash, proof } = worldIdProof || {};
+  const unpackedProof = proof ? decodeAbiParameters([{ type: "uint256[8]" }], proof as Tx)[0] : undefined;
+  console.log({ root, humanNullifierHash, proof: unpackedProof });
+  const actualRoot = root ? BigNumber.from(root) : undefined;
+  const actualHumanNullifierHash = humanNullifierHash ? BigNumber.from(humanNullifierHash) : undefined;
 
-/**
- * hook for paint() function in Copix contract
- */
-export const useCopixPaint = ({ x, y, color, worldIdProof }: CopixPaintArgs) => {
-  const { signal, root, humanNullifierHash, proof } = worldIdProof;
-  if (proof.length !== 8) throw new Error("Proof must be 8 elements long");
-  // typescript keeps complaining so sad code
-  const proofAsBigNumber: BigNumberProof = [
-    BigNumber.from(proof[0]),
-    BigNumber.from(proof[1]),
-    BigNumber.from(proof[2]),
-    BigNumber.from(proof[3]),
-    BigNumber.from(proof[4]),
-    BigNumber.from(proof[5]),
-    BigNumber.from(proof[6]),
-    BigNumber.from(proof[7]),
-  ];
-
-  return useScaffoldContractWrite({
+  return useScaffoldContractRead({
     contractName: CONTRACT_NAME,
-    functionName: "paint",
-    args: [
-      BigNumber.from(x),
-      BigNumber.from(y),
-      color,
-      signal,
-      BigNumber.from(root),
-      BigNumber.from(humanNullifierHash),
-      proofAsBigNumber,
-    ],
-    onBlockConfirmation: txnReceipt => {
-      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-    },
+    functionName: "verifyHumanityCheck",
+    args: [address, actualRoot, actualHumanNullifierHash, unpackedProof as any],
+    enabled: !!worldIdProof && !!address && !!unpackedProof && !!root && !!humanNullifierHash,
   });
 };
 

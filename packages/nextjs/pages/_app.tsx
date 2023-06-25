@@ -39,6 +39,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   const login = useCallback((currentUser: ISuccessResult | null) => {
+    console.log("new current user", currentUser);
     setCurrentUser(currentUser);
   }, []);
 
