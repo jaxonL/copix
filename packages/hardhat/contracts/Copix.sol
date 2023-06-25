@@ -28,6 +28,8 @@ contract Copix is ERC721, Ownable {
   uint256 public immutable canvasWidth;
   uint256 public immutable canvasHeight;
 
+
+
   // world id state vars
   /** @dev The World ID instance that will be used for verifying proofs */
   IWorldID internal immutable worldId;
@@ -151,13 +153,38 @@ contract Copix is ERC721, Ownable {
 
     return string(
         abi.encodePacked(
-            'data:application/json;utf8,{ "name": "Copix #"', tokenId, 
+            'data:application/json;utf8,', tokenData(tokenId)
+        )); 
+  }
+  function tokenData(uint256 tokenId) public view returns (string memory) {
+    require(tokenId < canvasHeight * canvasWidth, "Pixel does not exist");
+    uint256 latestIndex = pixels[tokenId].color.length - 1;
+    string memory latestColor = pixels[tokenId].color[latestIndex];
+    uint256 latestTimestamp = pixels[tokenId].editTimestamp[latestIndex];
+    uint8 latestEditedByHuman = pixels[tokenId].editedByHuman[latestIndex];
+
+    return string(
+        abi.encodePacked('{ "name": "Copix #"', tokenId, 
             '"color": "', latestColor,
             '", "timestamp": ', latestTimestamp,
             '", "lastEditedbyHuman": ', latestEditedByHuman,
             ' }'
         )); 
   }
+
+  function currentState() public view returns (string memory){
+    string memory state= 'data:application/json;utf8, {';
+     
+    for (uint j = 0; j < canvasHeight; j++) {
+      for (uint i = 0; i < canvasWidth; i++) {
+        state = string(
+          abi.encodePacked(state, '"', i, ":" ,j,'":', tokenData(_getTokenIdFromPixel(i, j))));
+      }
+    } 
+    state = string(abi.encodePacked(state, '}'));
+    return state;
+  }
+
 
   /**
    * verifies humanity of user using worldcoin

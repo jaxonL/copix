@@ -16,6 +16,7 @@ const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setCo
 
   function paint() {
     console.log(`Painting (${x}, ${y}) to be ${color}`);
+    /// actaully create transaction
     closeModal();
   }
 
