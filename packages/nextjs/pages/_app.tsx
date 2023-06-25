@@ -48,6 +48,9 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const setShowConfetti = useCallback((showConfetti: boolean | undefined) => {
     if (showConfetti === undefined) {
       setFirstPaintConfetti(true);
+      setTimeout(function () {
+        setFirstPaintConfetti(false);
+      }, 5000);
     } else if (showConfetti === true) {
       setFirstPaintConfetti(false);
     }
@@ -73,6 +76,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
         theme={isDarkTheme ? darkTheme() : lightTheme()}
       >
         <AuthContext.Provider value={contextValue}>
+          {showConfetti === true && <Confetti numberOfPieces={70} width={width} height={height} />}
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="relative flex flex-col flex-1">
@@ -81,7 +85,6 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
             <Footer />
           </div>
           <Toaster />
-          {showConfetti === true && <Confetti numberOfPieces={70} width={width} height={height} />}
         </AuthContext.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
