@@ -225,14 +225,18 @@ contract Copix is ERC721, Ownable {
     ); 
   }
 
-  function currentState() public view returns (PixelData[] memory) {
-    PixelData[] memory state = new PixelData[](canvasWidth * canvasHeight);
+  function currentState() public view returns (string[] memory) {
+    string[] memory state = new string[](canvasWidth * canvasHeight);
     uint index = 0;
     for (uint256 j = 0; j < canvasHeight; j++) {
       for (uint256 i = 0; i < canvasWidth; i++) {
         uint256 tokenId = _getTokenIdFromPixel(i, j);
-        string memory data = tokenData(tokenId);
-        state[index] = PixelData(i, j, data);
+        string memory latestColor = "#ffffff";
+        if (pixels[tokenId].color.length != 0) {
+          latestColor = pixels[tokenId].color[pixels[tokenId].color.length - 1];
+         }
+        // string memory data = tokenData(tokenId);
+        state[index] = latestColor;
         index++;
       }
     }

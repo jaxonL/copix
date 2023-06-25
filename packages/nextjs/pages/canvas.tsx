@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useRef, useState } from "react";
 import Pixel from "./Pixel";
 import Modal from "./paint_box";
 import SignInPrompt from "./sign_in_prompt";
-import { BigNumber } from "ethers";
+// import { BigNumber } from "ethers";
 import { useAccount } from "wagmi";
 import { AuthContext } from "~~/components/copix/AuthContext";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
@@ -13,11 +13,11 @@ interface PixelXY {
   y: number;
 }
 
-interface OnChainPixelData {
-  x: BigNumber;
-  y: BigNumber;
-  data: string;
-}
+// interface OnChainPixelData {
+//   x: BigNumber;
+//   y: BigNumber;
+//   data: string;
+// }
 
 interface PixelMetadata {
   name?: string;
@@ -26,28 +26,29 @@ interface PixelMetadata {
   timestamp?: Date;
 }
 
-interface PixelData extends PixelMetadata {
-  position: PixelXY;
-}
+// interface PixelData extends PixelMetadata {
+//   position: PixelXY;
+// }
 
-function convertToDisplayData(onChainPixel: OnChainPixelData): PixelData {
-  const data: any = JSON.parse(onChainPixel.data);
-  return {
-    position: { x: onChainPixel.x.toNumber(), y: onChainPixel.y.toNumber() },
-    name: data.name,
-    color: data.color,
-    lastEditedByHuman: data.lastEditedByHuman,
-    timestamp: new Date(data.timestamp * 1000),
-  };
-}
+// function convertToDisplayData(onChainPixel: OnChainPixelData): PixelData {
+//   const data: any = JSON.parse(onChainPixel.data);
+//   return {
+//     position: { x: onChainPixel.x.toNumber(), y: onChainPixel.y.toNumber() },
+//     name: data.name,
+//     color: data.color,
+//     lastEditedByHuman: data.lastEditedByHuman,
+//     timestamp: new Date(data.timestamp * 1000),
+//   };
+// }
 
-function createArrayFromCanvasState(canvasState: OnChainPixelData[], cols: number, rows: number): PixelMetadata[][] {
+function createArrayFromCanvasState(canvasState: string[], cols: number, rows: number): PixelMetadata[][] {
   const arr: PixelMetadata[][] = [];
   let index = 0;
   for (let i = 0; i < rows; i++) {
     const row: PixelMetadata[] = [];
     for (let j = 0; j < cols; j++) {
-      const data = convertToDisplayData(canvasState[index]);
+      // const data = convertToDisplayData(canvasState[index]);
+      const data = { color: canvasState[index] };
       row.push(data);
       index++;
     }
@@ -91,7 +92,7 @@ const CanvasComponent = (): JSX.Element => {
     if (!width || !height || !canvasState) {
       return [];
     }
-    const result = createArrayFromCanvasState(canvasState as OnChainPixelData[], width.toNumber(), height.toNumber());
+    const result = createArrayFromCanvasState(canvasState as string[], width.toNumber(), height.toNumber());
     return result;
   }, [width, height, canvasState]);
 

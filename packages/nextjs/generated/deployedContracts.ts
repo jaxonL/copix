@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Copix: {
-          address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
           abi: [
             {
               inputs: [
@@ -292,26 +292,9 @@ const contracts = {
               name: "currentState",
               outputs: [
                 {
-                  components: [
-                    {
-                      internalType: "uint256",
-                      name: "x",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "y",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "string",
-                      name: "data",
-                      type: "string",
-                    },
-                  ],
-                  internalType: "struct Copix.PixelData[]",
+                  internalType: "string[]",
                   name: "",
-                  type: "tuple[]",
+                  type: "string[]",
                 },
               ],
               stateMutability: "view",
@@ -787,7 +770,7 @@ const contracts = {
       name: "polygonMumbai",
       contracts: {
         Copix: {
-          address: "0x64FebeFd811335562218C4B3849646d3C05FF25B",
+          address: "0xB000a9e67318090885dD97258994baD3f581fB06",
           abi: [
             {
               inputs: [
@@ -1074,26 +1057,9 @@ const contracts = {
               name: "currentState",
               outputs: [
                 {
-                  components: [
-                    {
-                      internalType: "uint256",
-                      name: "x",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "y",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "string",
-                      name: "data",
-                      type: "string",
-                    },
-                  ],
-                  internalType: "struct Copix.PixelData[]",
+                  internalType: "string[]",
                   name: "",
-                  type: "tuple[]",
+                  type: "string[]",
                 },
               ],
               stateMutability: "view",
