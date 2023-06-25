@@ -39,7 +39,7 @@
     "usehooks-ts@^2.7.2": "patch:usehooks-ts@npm:^2.7.2#./.yarn/patches/usehooks-ts-npm-2.7.2-fceffe0e43.patch"
   },
   "dependencies": {
-    "gsap": "^3.12.1",
+    "node-gyp": "^9.4.0",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-confetti": "^6.1.0",
