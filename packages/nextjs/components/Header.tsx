@@ -115,7 +115,7 @@ export const Header = () => {
       <div className="navbar-end flex-grow mr-4">
         <p className="ml-4">{!currentUser && <RainbowKitCustomConnectButton />}</p>
         <FaucetButton />
-        <p className="ml-4">{!currentUser && <WorldCoinConnectButton />}</p>
+        <p className="ml-4">{(currentUser && "Humanity Verified") || <WorldCoinConnectButton />}</p>
       </div>
     </div>
   );

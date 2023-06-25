@@ -23,7 +23,7 @@ export const WorldCoinConnectButton = () => {
     >
       {({ open }) => (
         <button
-          className="flex items-center gap-x-4 transition-all no-underline bg-gray-900 border border-gray-900 h-[50px] px-6 rounded-xl text-white"
+          className="flex items-center gap-x-4 transition-all no-underline border border-gray-900 h-[50px] px-6 rounded-xl text-white bg-gray-900"
           onClick={open}
         >
           Connect with Worldcoin
