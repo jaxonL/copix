@@ -8,10 +8,19 @@ const app_id = "app_staging_e37599212a8ec2e551684f70564c8041";
 
 export const WorldCoinConnectButton = () => {
   const credential_types = [CredentialType.Orb, CredentialType.Phone];
-  const { login } = useContext(AuthContext);
+  const { login, currentUser } = useContext(AuthContext);
   const onSuccess = (result: ISuccessResult) => {
     login(result);
   };
+
+  if (currentUser) {
+    if (currentUser.credential_type === CredentialType.Orb) {
+      return <>{"Verified Humanity"}</>;
+    }
+    if (currentUser.credential_type === CredentialType.Phone) {
+      return <>{"Verified Phone Number"}</>;
+    }
+  }
   return (
     <IDKitWidget
       action={action}

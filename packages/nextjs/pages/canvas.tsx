@@ -123,9 +123,7 @@ const CanvasComponent = (): JSX.Element => {
         )}
 
         <div className="controls absolute left-0 right-0 bottom-0 bg-gray-800 p-0 flex items-center justify-between overflow-hidden">
-          <div className="face-space w-16">
-            width: {width?.toNumber()}, height: {height?.toNumber()}
-          </div>
+          <div className="face-space w-16">{/* width: {width?.toNumber()}, height: {height?.toNumber()} */}</div>
         </div>
       </div>
     </>
