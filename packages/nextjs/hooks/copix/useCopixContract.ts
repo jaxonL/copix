@@ -1,5 +1,7 @@
-import { useScaffoldContractWrite } from "../scaffold-eth";
+import { useScaffoldContractWrite, useScaffoldEventHistory, useScaffoldEventSubscriber } from "../scaffold-eth";
 import { BigNumber } from "ethers";
+import { CONTRACT_NAME, Humanity, PIXEL_UPDATE_EVENT, toHumanity } from "~~/utils/constants";
+import { UseScaffoldEventHistoryConfig } from "~~/utils/scaffold-eth/contract";
 
 type BigNumberProof = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber];
 
@@ -17,6 +19,9 @@ interface CopixPaintArgs {
   worldIdProof: WorldIDProof;
 }
 
+/**
+ * hook for paint() function in Copix contract
+ */
 export const useCopixPaint = ({ x, y, color, worldIdProof }: CopixPaintArgs) => {
   const { signal, root, humanNullifierHash, proof } = worldIdProof;
   if (proof.length !== 8) throw new Error("Proof must be 8 elements long");
@@ -33,7 +38,7 @@ export const useCopixPaint = ({ x, y, color, worldIdProof }: CopixPaintArgs) => 
   ];
 
   return useScaffoldContractWrite({
-    contractName: "Copix",
+    contractName: CONTRACT_NAME,
     functionName: "paint",
     args: [
       BigNumber.from(x),
@@ -47,5 +52,44 @@ export const useCopixPaint = ({ x, y, color, worldIdProof }: CopixPaintArgs) => 
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
     },
+  });
+};
+
+interface CopixPixelUpdateArgs {
+  listener: (painter: string, x: number, y: number, newColor: string, timestamp: Date, editedByHuman: Humanity) => void;
+  once?: boolean;
+}
+
+/** subscribes to the PixelUpdate event */
+export const useCopixPixelUpdateEventSubscriber = ({ listener, once }: CopixPixelUpdateArgs) => {
+  return useScaffoldEventSubscriber({
+    contractName: CONTRACT_NAME,
+    eventName: PIXEL_UPDATE_EVENT,
+    listener(...args) {
+      const [painter, x, y, newColor, timestamp, editedByHuman] = args;
+      listener(
+        painter,
+        x.toNumber(),
+        y.toNumber(),
+        newColor,
+        new Date(timestamp.toNumber() * 1000),
+        toHumanity(editedByHuman),
+      );
+    },
+    once,
+  });
+};
+
+/** fetches PixelUpdate history */
+export const useCopixPixelUpdateHistory = (
+  config: Omit<
+    UseScaffoldEventHistoryConfig<typeof CONTRACT_NAME, typeof PIXEL_UPDATE_EVENT>,
+    "contractName" | "eventName"
+  >,
+) => {
+  return useScaffoldEventHistory({
+    contractName: CONTRACT_NAME,
+    eventName: PIXEL_UPDATE_EVENT,
+    ...config,
   });
 };

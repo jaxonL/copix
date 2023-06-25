@@ -57,6 +57,9 @@ const CanvasComponent = (): JSX.Element => {
     // Add more pixels as needed
   });
 
+  /**
+   * actual array of pixels to render reading from grid
+   */
   const canvasGrid = useMemo(() => {
     const result = create2DArray(width, height);
     for (const pos in grid) {
@@ -77,7 +80,7 @@ const CanvasComponent = (): JSX.Element => {
       <div
         id="canvas"
         ref={canvasRef}
-        className={"grid"}
+        className="grid"
         style={{
           gridTemplateColumns: `repeat(${height},${pixelSize}px)`,
           gridTemplateRows: `repeat(${width},${pixelSize}px)`,

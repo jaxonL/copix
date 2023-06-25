@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { AppProps } from "next/app";
+import { AuthContext } from "../components/copix/AuthContext";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
+import { ISuccessResult } from "@worldcoin/idkit";
 import NextNProgress from "nextjs-progressbar";
 import { Toaster } from "react-hot-toast";
 import { useDarkMode } from "usehooks-ts";
@@ -32,6 +34,20 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
     setIsDarkTheme(isDarkMode);
   }, [isDarkMode]);
 
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  const login = useCallback((currentUser: ISuccessResult | null) => {
+    setCurrentUser(currentUser);
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({
+      currentUser,
+      login,
+    }),
+    [currentUser, login],
+  );
+
   return (
     <WagmiConfig client={wagmiClient}>
       <NextNProgress />
@@ -40,14 +56,16 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
         avatar={BlockieAvatar}
         theme={isDarkTheme ? darkTheme() : lightTheme()}
       >
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="relative flex flex-col flex-1">
-            <Component {...pageProps} />
-          </main>
-          <Footer />
-        </div>
-        <Toaster />
+        <AuthContext.Provider value={contextValue}>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="relative flex flex-col flex-1">
+              <Component {...pageProps} />
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+        </AuthContext.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
