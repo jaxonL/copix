@@ -7,7 +7,7 @@ To maintain a balanced and fair environment, Copix implements a thoughtful coold
 
 In addition to the creative process, Copix offers a captivating journey through pixel history. Users can delve into the extensive metadata records, revealing the fascinating evolution of each pixel over time. This comprehensive history includes past colors chosen, the individuals who contributed and the timestamp of all the activities. With every stroke of color, Copix becomes an ever-evolving masterpiece, shaped collectively by the artistic Web3 community.
 
-# how we made Copix
+# How Copix was made
 Copix is deployed on the Polygon testnet Mumbai. 
 We used Solidity to write the smart contract for creating and updating the pixel tokens, as well as specifying user actions. We used React to build the frontend webpage. 
 We leveraged the Anonymous Action feature of World ID to verify whether or not the user painting is a human. 
