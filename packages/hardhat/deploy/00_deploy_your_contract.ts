@@ -6,7 +6,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 // const chainId = 80001;
 const canvasWidth = 30;
 const canvasHeight = 20;
-const timeoutInSeconds = 30;
+const timeoutInSeconds = 120;
 
 /**
  * Deploys a contract named "Copix" using the deployer account and

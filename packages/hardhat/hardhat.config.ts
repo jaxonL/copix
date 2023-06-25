@@ -24,6 +24,7 @@ const config: HardhatUserConfig = {
         // https://docs.soliditylang.org/en/latest/using-the-compiler.html#optimizer-options
         runs: 200,
       },
+      viaIR: true,
     },
   },
   defaultNetwork: "localhost",
