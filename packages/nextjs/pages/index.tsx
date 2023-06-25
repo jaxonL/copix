@@ -54,7 +54,7 @@ type ReactionEvent = {
   value: string;
 };
 
-function Example({ children }: any) {
+function Example() {
   const others = useOthers();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const broadcast = useBroadcastEvent();
@@ -257,7 +257,6 @@ function Example({ children }: any) {
                 y={presence.cursor.y}
                 message={presence.message}
               />
-              {children}
             </>
           );
         })}
@@ -279,9 +278,8 @@ export default function Home() {
           message: "",
         })}
       >
-        <Example>
-          <CanvasComponent />
-        </Example>
+        <CanvasComponent />
+        <Example />
       </RoomProvider>
     </>
   );
