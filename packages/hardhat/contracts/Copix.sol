@@ -84,13 +84,13 @@ contract Copix is ERC721, Ownable {
 
   function paint(
     uint256 x, uint256 y, string calldata color,
-    address signal, uint256 root, uint256 humanNullifierHash, uint256[8] calldata proof
+    uint256 root, uint256 humanNullifierHash, uint256[8] calldata proof
   ) public {
     // sure why not let's keep this
     require(bytes(color).length == 7, "color must be a hex string of length 7");
     uint256 tokenId = _getTokenIdFromPixel(x, y);
 
-    uint8 humanityCode = _verifyHumanity(signal, root, humanNullifierHash, proof);
+    uint8 humanityCode = _verifyHumanity(root, humanNullifierHash, proof);
 
     // TODO: better error message
     require(lastEditTime[humanNullifierHash] + cooldownTime < block.timestamp, "Paint: user cooldown not finished");
@@ -146,15 +146,11 @@ contract Copix is ERC721, Ownable {
   // TODO: add color, timestamp etc. as attributes in json so it shows on OpenSea
   function tokenUri(uint256 tokenId) public view returns (string memory) {
     require(tokenId < canvasHeight * canvasWidth, "Pixel does not exist");
-    uint256 latestIndex = pixels[tokenId].color.length - 1;
-    string memory latestColor = pixels[tokenId].color[latestIndex];
-    uint256 latestTimestamp = pixels[tokenId].editTimestamp[latestIndex];
-    uint8 latestEditedByHuman = pixels[tokenId].editedByHuman[latestIndex];
 
     return string(
-        abi.encodePacked(
-            'data:application/json;utf8,', tokenData(tokenId)
-        )); 
+      abi.encodePacked(
+        'data:application/json;utf8,', tokenData(tokenId)
+      ));
   }
   function tokenData(uint256 tokenId) public view returns (string memory) {
     require(tokenId < canvasHeight * canvasWidth, "Pixel does not exist");
@@ -185,23 +181,19 @@ contract Copix is ERC721, Ownable {
     return state;
   }
 
-
   /**
    * verifies humanity of user using worldcoin
-   * @param signal An arbitrary input from the user, usually the user's wallet address (check README for further details)
    * @param root The root of the Merkle tree (returned by the JS widget).
    * @param nullifierHash The nullifier hash for this proof, preventing double signaling (returned by the JS widget).
    * @param proof The zero-knowledge proof that demonstrates the claimer is registered with World ID (returned by the JS widget).
    */
   function _verifyHumanity(
-      address signal,
       uint256 root,
       uint256 nullifierHash,
       uint256[8] calldata proof
   ) private returns (uint8) {
     // We now verify the provided proof is valid and the user is verified by World ID
     verifyHumanityCheck(
-      signal,
       root,
       nullifierHash,
       proof
@@ -219,7 +211,6 @@ contract Copix is ERC721, Ownable {
    * see _verifyHumanity for param info
    */
   function verifyHumanityCheck(
-      address signal,
       uint256 root,
       uint256 nullifierHash,
       uint256[8] calldata proof
@@ -228,7 +219,7 @@ contract Copix is ERC721, Ownable {
     worldId.verifyProof(
       root,
       groupId_human, // always verify is human
-      abi.encodePacked(signal).hashToField(),
+      1, // signal hash is always 1
       nullifierHash,
       externalNullifier,
       proof
