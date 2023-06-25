@@ -2,10 +2,12 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 // Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 // WorldCoin integration
 import { ByteHasher } from "./helpers/ByteHasher.sol";
@@ -13,6 +15,9 @@ import { IWorldID } from "./interfaces/IWorldID.sol";
 
 contract Copix is ERC721, Ownable {
   using ByteHasher for bytes;
+  using Strings for uint256;
+  using Strings for uint8;
+  using Address for address;
 
   uint256 private _tokenId;
 
@@ -23,12 +28,16 @@ contract Copix is ERC721, Ownable {
     uint8[] editedByHuman;
   }
 
+  struct PixelData {
+    uint256 x;
+    uint256 y;
+    string data;
+  }
+
   // State Variables
   uint256 public immutable cooldownTime; // in seconds
   uint256 public immutable canvasWidth;
   uint256 public immutable canvasHeight;
-
-
 
   // world id state vars
   /** @dev The World ID instance that will be used for verifying proofs */
@@ -179,40 +188,54 @@ contract Copix is ERC721, Ownable {
 
 
   // TODO: add color, timestamp etc. as attributes in json so it shows on OpenSea
-  function tokenUri(uint256 tokenId) public view returns (string memory) {
+  function tokenURI(uint256 tokenId) public override view returns (string memory) {
     require(tokenId < canvasHeight * canvasWidth, "Pixel does not exist");
 
     return string(
       abi.encodePacked(
         'data:application/json;utf8,', tokenData(tokenId)
-      ));
+      )
+    );
   }
+
   function tokenData(uint256 tokenId) public view returns (string memory) {
     require(tokenId < canvasHeight * canvasWidth, "Pixel does not exist");
+
+    if (pixels[tokenId].color.length == 0) {
+      return string(
+        abi.encodePacked(
+          '{ "name": "Copix #', tokenId.toString(), 
+          '", "color": "#ffffff", "timestamp": 0, "lastEditedbyHuman": 0 }'
+        )
+      ); 
+    }
     uint256 latestIndex = pixels[tokenId].color.length - 1;
     string memory latestColor = pixels[tokenId].color[latestIndex];
     uint256 latestTimestamp = pixels[tokenId].editTimestamp[latestIndex];
     uint8 latestEditedByHuman = pixels[tokenId].editedByHuman[latestIndex];
 
     return string(
-        abi.encodePacked('{ "name": "Copix #"', tokenId, 
-            '"color": "', latestColor,
-            '", "timestamp": ', latestTimestamp,
-            '", "lastEditedbyHuman": ', latestEditedByHuman,
-            ' }'
-        )); 
+      abi.encodePacked(
+        '{ "name": "Copix #', tokenId.toString(), 
+        '", "color": "', latestColor,
+        '", "timestamp": ', latestTimestamp.toString(),
+        ', "lastEditedbyHuman": ', latestEditedByHuman.toString(),
+        '}'
+      )
+    ); 
   }
 
-  function currentState() public view returns (string memory){
-    string memory state= 'data:application/json;utf8, {';
-     
-    for (uint j = 0; j < canvasHeight; j++) {
-      for (uint i = 0; i < canvasWidth; i++) {
-        state = string(
-          abi.encodePacked(state, '"', i, ":" ,j,'":', tokenData(_getTokenIdFromPixel(i, j))));
+  function currentState() public view returns (PixelData[] memory) {
+    PixelData[] memory state = new PixelData[](canvasWidth * canvasHeight);
+    uint index = 0;
+    for (uint256 j = 0; j < canvasHeight; j++) {
+      for (uint256 i = 0; i < canvasWidth; i++) {
+        uint256 tokenId = _getTokenIdFromPixel(i, j);
+        string memory data = tokenData(tokenId);
+        state[index] = PixelData(i, j, data);
+        index++;
       }
-    } 
-    state = string(abi.encodePacked(state, '}'));
+    }
     return state;
   }
 
@@ -251,14 +274,16 @@ contract Copix is ERC721, Ownable {
       uint256[8] calldata proof
   ) public view {
     // We now verify the provided proof is valid and the user is verified by World ID
-    worldId.verifyProof(
-      root,
+    try worldId.verifyProof(root,
       groupId_human, // always verify is human
       1, // signal hash is always 1
       nullifierHash,
       externalNullifier,
-      proof
-    );
+      proof) {
+      
+    } catch Error(string memory reason) {
+      revert(string(abi.encodePacked("verifyProof() failed: ", reason)));
+    }
   }
 
   function getTokenId() public view returns (uint256) {
@@ -289,6 +314,4 @@ contract Copix is ERC721, Ownable {
     require(owner != address(0), "ERC721: owner query for nonexistent token");
     return owner;
   }
-
-  // TODO: view current state of canvas
 }

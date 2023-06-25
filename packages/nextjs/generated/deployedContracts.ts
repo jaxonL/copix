@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Copix: {
-          address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
           abi: [
             {
               inputs: [
@@ -292,9 +292,26 @@ const contracts = {
               name: "currentState",
               outputs: [
                 {
-                  internalType: "string",
+                  components: [
+                    {
+                      internalType: "uint256",
+                      name: "x",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "y",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "string",
+                      name: "data",
+                      type: "string",
+                    },
+                  ],
+                  internalType: "struct Copix.PixelData[]",
                   name: "",
-                  type: "string",
+                  type: "tuple[]",
                 },
               ],
               stateMutability: "view",
@@ -651,25 +668,6 @@ const contracts = {
                 },
               ],
               name: "tokenURI",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "tokenUri",
               outputs: [
                 {
                   internalType: "string",
@@ -789,7 +787,7 @@ const contracts = {
       name: "polygonMumbai",
       contracts: {
         Copix: {
-          address: "0x01D550c73bdAd3B33e1fD1899f5d17B0dbC629B9",
+          address: "0x64FebeFd811335562218C4B3849646d3C05FF25B",
           abi: [
             {
               inputs: [
@@ -1076,9 +1074,26 @@ const contracts = {
               name: "currentState",
               outputs: [
                 {
-                  internalType: "string",
+                  components: [
+                    {
+                      internalType: "uint256",
+                      name: "x",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "y",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "string",
+                      name: "data",
+                      type: "string",
+                    },
+                  ],
+                  internalType: "struct Copix.PixelData[]",
                   name: "",
-                  type: "string",
+                  type: "tuple[]",
                 },
               ],
               stateMutability: "view",
@@ -1435,25 +1450,6 @@ const contracts = {
                 },
               ],
               name: "tokenURI",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "tokenUri",
               outputs: [
                 {
                   internalType: "string",

@@ -2,28 +2,55 @@ import React, { useContext, useMemo, useRef, useState } from "react";
 import Pixel from "./Pixel";
 import Modal from "./paint_box";
 import SignInPrompt from "./sign_in_prompt";
+import { BigNumber } from "ethers";
 import { useAccount } from "wagmi";
 import { AuthContext } from "~~/components/copix/AuthContext";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
-import { CONTRACT_NAME } from "~~/utils/constants";
-
-interface PixelMetadata {
-  color: string;
-}
+import { CONTRACT_NAME, Humanity } from "~~/utils/constants";
 
 interface PixelXY {
   x: number;
   y: number;
 }
 
-function create2DArray(cols: number, rows: number): PixelMetadata[][] {
+interface OnChainPixelData {
+  x: BigNumber;
+  y: BigNumber;
+  data: string;
+}
+
+interface PixelMetadata {
+  name?: string;
+  color: string;
+  lastEditedByHuman?: Humanity;
+  timestamp?: Date;
+}
+
+interface PixelData extends PixelMetadata {
+  position: PixelXY;
+}
+
+function convertToDisplayData(onChainPixel: OnChainPixelData): PixelData {
+  const data: any = JSON.parse(onChainPixel.data);
+  return {
+    position: { x: onChainPixel.x.toNumber(), y: onChainPixel.y.toNumber() },
+    name: data.name,
+    color: data.color,
+    lastEditedByHuman: data.lastEditedByHuman,
+    timestamp: new Date(data.timestamp * 1000),
+  };
+}
+
+function createArrayFromCanvasState(canvasState: OnChainPixelData[], cols: number, rows: number): PixelMetadata[][] {
   const arr: PixelMetadata[][] = [];
+  let index = 0;
   for (let i = 0; i < rows; i++) {
     const row: PixelMetadata[] = [];
     for (let j = 0; j < cols; j++) {
-      row.push({ color: "#ffffff" });
+      const data = convertToDisplayData(canvasState[index]);
+      row.push(data);
+      index++;
     }
-
     arr.push(row);
   }
   return arr;
@@ -45,6 +72,11 @@ const CanvasComponent = (): JSX.Element => {
     functionName: "canvasHeight",
   });
 
+  const { data: canvasState, isLoading: loadingCanvasState } = useScaffoldContractRead({
+    contractName: CONTRACT_NAME,
+    functionName: "currentState",
+  });
+
   const canvasRef = useRef<HTMLDivElement>(null);
   // const isDownRef = useRef(false);
   // const zoomedRef = useRef(false);
@@ -52,28 +84,16 @@ const CanvasComponent = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pixelSize, setPixelSize] = useState(32);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [grid, setGrid] = useState<{ [key: string]: PixelMetadata }>({
-    // Prepopulated pixel data as an example
-    "5:5": { color: "#ff0000" },
-    "10:7": { color: "#00ff00" },
-    // Add more pixels as needed
-  });
-
   /**
    * actual array of pixels to render reading from grid
    */
   const canvasGrid = useMemo(() => {
-    if (!width || !height) {
+    if (!width || !height || !canvasState) {
       return [];
     }
-    const result = create2DArray(width.toNumber(), height.toNumber());
-    for (const pos in grid) {
-      const [x, y] = pos.split(":").map(Number);
-      result[y][x] = grid[pos];
-    }
+    const result = createArrayFromCanvasState(canvasState as OnChainPixelData[], width.toNumber(), height.toNumber());
     return result;
-  }, [grid, width, height]);
+  }, [width, height, canvasState]);
 
   function onPixelClicked(x: number, y: number) {
     if (!currentUser || !address) {
@@ -85,7 +105,6 @@ const CanvasComponent = (): JSX.Element => {
     }
     console.log("x:", x);
     console.log("y:", y);
-    // TODO: show modal for color selection + paint button
   }
 
   function closeModal() {
@@ -101,7 +120,7 @@ const CanvasComponent = (): JSX.Element => {
       <Modal {...selectedPixel} showModal={showModal} closeModal={closeModal} color={color} setColor={setColor} />
       <SignInPrompt showSignIn={showSignIn} closeSignIn={closeSignIn} />
       <div className="h-full bg-transparent overflow-hidden font-lato select-none flex my-7 items-center justify-center">
-        {loadingWidth || loadingHeight || !height || !width ? (
+        {loadingWidth || loadingHeight || loadingCanvasState || !height || !width || !canvasState ? (
           <div>Loading...</div>
         ) : (
           <div
