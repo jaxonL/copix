@@ -58,6 +58,11 @@ const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setCo
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
     },
+    onSuccess: (data: any) => {
+      console.log("successful tx, data: ", data);
+      // Only displays confetti on the first paint
+      setShowConfetti(showConfetti);
+    },
   });
 
   useEffect(() => {
@@ -69,8 +74,6 @@ const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setCo
   const { showConfetti, setShowConfetti } = useContext(AuthContext);
   async function paint() {
     console.log(`Painting (${x}, ${y}) to be ${color}`);
-    // Only displays confetti on the first paint
-    setShowConfetti(showConfetti);
     if (!currentUser || !data?.address) {
       console.log("No user or contract address");
       return;
