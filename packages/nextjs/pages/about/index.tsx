@@ -1,62 +1,46 @@
-import Link from "next/link";
+// import Link from "next/link";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
+// import { BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 
 const Home: NextPage = () => {
   return (
     <>
       <MetaHeader />
+
       <div className="flex items-center flex-col flex-grow pt-10">
         <div className="px-5">
           <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">CoPix</span>
+            <span className="block text-6xl mb-2">👨‍🎨</span>
+            <span className="block text-6xl font-bold mt-5">CoPix</span>
+            <span className="block text-xl mt-10">
+              A public canvas where anyone can create art one pixel at a time.
+              {/* Uniting the Web3 community one pixel at a time. */}
+            </span>
           </h1>
-        </div>
-
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <SparklesIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Experiment with{" "}
-                <Link href="/example-ui" passHref className="link">
-                  Example UI
-                </Link>{" "}
-                to build your own UI.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore the canvas{" "}
-                <Link href="/pixel" passHref className="link">
-                  Pixel Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
+          <div className="mt-10 my-12 mx-3 max-w-6xl border border-gray-300 p-6 rounded-lg">
+            <p
+              style={{
+                lineHeight: "3",
+              }}
+            >
+              <div>
+                {" "}
+                Copix is a public canvas built on Polygon testnet Mumbai, where each pixel is a non-fungible token.{" "}
+              </div>
+              <div>
+                {" "}
+                Verified World ID holders can modify the metadata, allowing users to create art by changing the colour
+                of the pixels.
+              </div>
+              <div> After choosing a colour, the user now owns the pixel they just edited.</div>
+              <div>A 2-minute cooldown period restricts consecutive pixel modifications by the same user.</div>
+              <div>
+                {" "}
+                Additionally, users have access to the complete pixel metadata history, including past colors and
+                contributors.
+              </div>
+            </p>
           </div>
         </div>
       </div>

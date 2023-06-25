@@ -1,6 +1,6 @@
 import { hardhat } from "wagmi/chains";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import { HeartIcon } from "@heroicons/react/24/outline";
+// import { HeartIcon } from "@heroicons/react/24/outline";
 import { SwitchTheme } from "~~/components/SwitchTheme";
 import { Faucet } from "~~/components/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
@@ -32,6 +32,9 @@ export const Footer = () => {
         <ul className="menu menu-horizontal w-full">
           <div className="flex justify-center items-center gap-2 text-sm w-full">
             <div>
+              <span className="block text-l">An ETHGlobal Waterloo 2023 Project </span>
+            </div>
+            {/* <div>
               <a
                 href="https://github.com/scaffold-eth/se-2"
                 target="_blank"
@@ -63,7 +66,7 @@ export const Footer = () => {
               >
                 Support
               </a>
-            </div>
+            </div> */}
           </div>
         </ul>
       </div>
