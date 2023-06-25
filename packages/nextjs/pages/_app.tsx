@@ -81,7 +81,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
             <Footer />
           </div>
           <Toaster />
-          {showConfetti === true && <Confetti numberOfPieces={200} width={width} height={height} />}
+          {showConfetti === true && <Confetti numberOfPieces={70} width={width} height={height} />}
         </AuthContext.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
