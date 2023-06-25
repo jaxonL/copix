@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Copix: {
-          address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
           abi: [
             {
               inputs: [
@@ -292,9 +292,9 @@ const contracts = {
               name: "currentState",
               outputs: [
                 {
-                  internalType: "string",
+                  internalType: "string[]",
                   name: "",
-                  type: "string",
+                  type: "string[]",
                 },
               ],
               stateMutability: "view",
@@ -651,25 +651,6 @@ const contracts = {
                 },
               ],
               name: "tokenURI",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "tokenUri",
               outputs: [
                 {
                   internalType: "string",
@@ -789,7 +770,7 @@ const contracts = {
       name: "polygonMumbai",
       contracts: {
         Copix: {
-          address: "0x01D550c73bdAd3B33e1fD1899f5d17B0dbC629B9",
+          address: "0xB000a9e67318090885dD97258994baD3f581fB06",
           abi: [
             {
               inputs: [
@@ -1076,9 +1057,9 @@ const contracts = {
               name: "currentState",
               outputs: [
                 {
-                  internalType: "string",
+                  internalType: "string[]",
                   name: "",
-                  type: "string",
+                  type: "string[]",
                 },
               ],
               stateMutability: "view",
@@ -1435,25 +1416,6 @@ const contracts = {
                 },
               ],
               name: "tokenURI",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "tokenId",
-                  type: "uint256",
-                },
-              ],
-              name: "tokenUri",
               outputs: [
                 {
                   internalType: "string",
