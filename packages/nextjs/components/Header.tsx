@@ -105,14 +105,7 @@ export const Header = () => {
       <div className="navbar-end flex-grow mr-4">
         <RainbowKitCustomConnectButton />
         <FaucetButton />
-        <WorldCoinConnectButton
-          onSuccess={() => {
-            console.log("success");
-          }}
-          onError={() => {
-            console.log("error");
-          }}
-        />
+        <WorldCoinConnectButton />
       </div>
     </div>
   );

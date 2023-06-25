@@ -3,9 +3,9 @@ import { CopyIcon } from "./assets/CopyIcon";
 import { DiamondIcon } from "./assets/DiamondIcon";
 import { HareIcon } from "./assets/HareIcon";
 import { ArrowSmallRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
 // import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 // import { CONTRACT_NAME } from "~~/utils/constants";
-import { WorldcoinWidget } from "~~/pages/pixel/worldcoin";
 
 export const ContractInteraction = () => {
   const [visible, setVisible] = useState(true);
@@ -89,7 +89,6 @@ export const ContractInteraction = () => {
             <span className="text-sm leading-tight">Price:</span>
             <div className="badge badge-warning">0.01 ETH + Gas</div>
           </div>
-          <WorldcoinWidget />
         </div>
       </div>
     </div>

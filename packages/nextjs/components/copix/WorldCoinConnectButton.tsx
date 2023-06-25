@@ -1,14 +1,32 @@
-// TODO: Add WorldCoinConnectButton component
-interface WorldCoinConnectButtonProps {
-  onSuccess: () => void;
-  onError: () => void;
-}
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const WorldCoinConnectButton = ({ onError, onSuccess }: WorldCoinConnectButtonProps) => {
-  // trigger idkit on click
-  function onClick() {
-    console.log("WorldCoinConnectButton clicked");
-  }
+import { CredentialType, IDKitWidget, ISuccessResult } from "@worldcoin/idkit";
 
-  return <button onClick={onClick}>WorldCoin Login</button>;
+export const WorldCoinConnectButton = () => {
+  const onSuccess = (result: ISuccessResult) => {
+    console.log(result);
+  };
+
+  const credential_types = [CredentialType.Orb, CredentialType.Phone];
+
+  const action = "paint";
+  const app_id = "app_staging_e37599212a8ec2e551684f70564c8041";
+
+  return (
+    <IDKitWidget
+      action={action}
+      signal="my_signal"
+      onSuccess={onSuccess}
+      app_id={app_id}
+      credential_types={credential_types}
+      // walletConnectProjectId="get_this_from_walletconnect_portal"
+    >
+      {({ open }) => (
+        <button
+          className="flex items-center gap-x-4 transition-all no-underline bg-gray-900 border border-gray-900 h-[50px] px-6 rounded-xl text-white"
+          onClick={open}
+        >
+          Connect with Worldcoin
+        </button>
+      )}
+    </IDKitWidget>
+  );
 };
