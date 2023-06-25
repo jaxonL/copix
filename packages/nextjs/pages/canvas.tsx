@@ -66,8 +66,9 @@ const CanvasComponent = (): JSX.Element => {
     return result;
   }, [grid]);
 
-  function onPixelClicked(pixelId: number) {
-    console.log("Pixel clicked:", pixelId);
+  function onPixelClicked(x: number, y: number) {
+    console.log("x:", x);
+    console.log("y:", y);
     // TODO: show modal for color selection + paint button
   }
 
@@ -84,7 +85,7 @@ const CanvasComponent = (): JSX.Element => {
       >
         {canvasGrid.map((row, y) => {
           return row.map((pixel, x) => (
-            <Pixel key={`${x}:${y}`} color={pixel.color} onClick={onPixelClicked.bind(null, y * width + x)} />
+            <Pixel key={`${x}:${y}`} color={pixel.color} onClick={onPixelClicked.bind(null, x, y)} />
           ));
         })}
       </div>
