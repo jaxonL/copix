@@ -15,10 +15,46 @@ export const WorldCoinConnectButton = () => {
 
   if (currentUser) {
     if (currentUser.credential_type === CredentialType.Orb) {
-      return <>{"Verified Humanity"}</>;
+      return (
+        <>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="ml-5 w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          {"Verified Humanity"}
+        </>
+      );
     }
     if (currentUser.credential_type === CredentialType.Phone) {
-      return <>{"Verified Phone Number"}</>;
+      return (
+        <>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="ml-5 w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          {"Verified Phone Number"}
+        </>
+      );
     }
   }
   return (
@@ -32,10 +68,10 @@ export const WorldCoinConnectButton = () => {
     >
       {({ open }) => (
         <button
-          className="flex items-center gap-x-4 transition-all no-underline border border-gray-900 h-[50px] px-6 rounded-xl text-white bg-gray-900"
+          className="btn btn-primary btn-sm normal-case flex items-center gap-x-4 transition-all no-underline h-[50px] px-6 rounded-xl text-white bg-gray-700 hover:bg-gray-900"
           onClick={open}
         >
-          Connect with Worldcoin
+          Verify with Worldcoin
         </button>
       )}
     </IDKitWidget>

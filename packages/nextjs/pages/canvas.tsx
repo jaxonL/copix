@@ -100,7 +100,7 @@ const CanvasComponent = (): JSX.Element => {
     <>
       <Modal {...selectedPixel} showModal={showModal} closeModal={closeModal} color={color} setColor={setColor} />
       <SignInPrompt showSignIn={showSignIn} closeSignIn={closeSignIn} />
-      <div className="h-full bg-gray-300 overflow-hidden font-lato select-none flex items-center justify-center">
+      <div className="h-full bg-transparent overflow-hidden font-lato select-none flex my-7 items-center justify-center">
         {loadingWidth || loadingHeight || !height || !width ? (
           <div>Loading...</div>
         ) : (
@@ -111,7 +111,7 @@ const CanvasComponent = (): JSX.Element => {
             style={{
               gridTemplateColumns: `repeat(${width.toNumber()},${pixelSize}px)`,
               gridTemplateRows: `repeat(${height.toNumber()},${pixelSize}px)`,
-              border: "1px solid black",
+              border: "1px solid #ccc",
             }}
           >
             {canvasGrid.map((col, y) => {
