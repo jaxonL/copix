@@ -14,4 +14,4 @@ We leveraged the Anonymous Action feature of World ID to verify whether or not t
 
 # Future considerations
 * Add feature to see all previous versions of the canvas
-* Make pixel tokens displayable on OpenSea
+* Add feature to see number of humans contributed to the canvas
