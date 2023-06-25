@@ -8097,6 +8097,7 @@ __metadata:
     gsap: ^3.12.1
     husky: ^8.0.1
     lint-staged: ^13.0.3
+    node-gyp: ^9.4.0
     react: ^18.2.0
     react-color: ^2.19.3
     react-confetti: ^6.1.0
@@ -14714,7 +14715,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-gyp@npm:latest":
+"node-gyp@npm:^9.4.0, node-gyp@npm:latest":
   version: 9.4.0
   resolution: "node-gyp@npm:9.4.0"
   dependencies:
