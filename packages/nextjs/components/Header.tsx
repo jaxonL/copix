@@ -111,7 +111,7 @@ export const Header = () => {
       <div className="navbar-end flex-grow mr-4">
         <RainbowKitCustomConnectButton />
         <FaucetButton />
-        {!currentUser && <WorldCoinConnectButton />}
+        <p className="ml-4">{!currentUser && <WorldCoinConnectButton />}</p>
       </div>
     </div>
   );
