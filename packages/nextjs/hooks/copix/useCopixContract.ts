@@ -1,5 +1,6 @@
-import { useScaffoldContractWrite } from "../scaffold-eth";
+import { useScaffoldContractWrite, useScaffoldEventSubscriber } from "../scaffold-eth";
 import { BigNumber } from "ethers";
+import { CONTRACT_NAME } from "~~/utils/constants";
 
 type BigNumberProof = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber];
 
@@ -17,6 +18,9 @@ interface CopixPaintArgs {
   worldIdProof: WorldIDProof;
 }
 
+/**
+ * hook for paint() function in Copix contract
+ */
 export const useCopixPaint = ({ x, y, color, worldIdProof }: CopixPaintArgs) => {
   const { signal, root, humanNullifierHash, proof } = worldIdProof;
   if (proof.length !== 8) throw new Error("Proof must be 8 elements long");
@@ -33,7 +37,7 @@ export const useCopixPaint = ({ x, y, color, worldIdProof }: CopixPaintArgs) => 
   ];
 
   return useScaffoldContractWrite({
-    contractName: "Copix",
+    contractName: CONTRACT_NAME,
     functionName: "paint",
     args: [
       BigNumber.from(x),
@@ -46,6 +50,17 @@ export const useCopixPaint = ({ x, y, color, worldIdProof }: CopixPaintArgs) => 
     ],
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
+};
+
+/** subscribes to the PixelUpdate event */
+export const useCopixPixelUpdateEventSubscriber = () => {
+  return useScaffoldEventSubscriber({
+    contractName: CONTRACT_NAME,
+    eventName: "PixelUpdate",
+    listener: (painter, x, y, newColor, timestamp, editedByHuman) => {
+      console.log(painter, x, y, newColor, timestamp, editedByHuman);
     },
   });
 };
