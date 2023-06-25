@@ -1,6 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import ColorPicker from "./color_picker";
 import { Dialog, Transition } from "@headlessui/react";
+import { AuthContext } from "~~/components/copix/AuthContext";
 
 interface ModalProps {
   x?: number;
@@ -14,8 +15,12 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setColor }) => {
   console.log(color);
 
+  const { showConfetti, setShowConfetti } = useContext(AuthContext);
+
   function paint() {
     console.log(`Painting (${x}, ${y}) to be ${color}`);
+    // Only displays confetti on the first paint
+    setShowConfetti(showConfetti);
     closeModal();
   }
 

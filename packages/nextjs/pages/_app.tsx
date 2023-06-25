@@ -5,7 +5,9 @@ import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowki
 import "@rainbow-me/rainbowkit/styles.css";
 import { ISuccessResult } from "@worldcoin/idkit";
 import NextNProgress from "nextjs-progressbar";
+import Confetti from "react-confetti";
 import { Toaster } from "react-hot-toast";
+import useWindowSize from "react-use/lib/useWindowSize";
 import { useDarkMode } from "usehooks-ts";
 import { WagmiConfig } from "wagmi";
 import { Footer } from "~~/components/Footer";
@@ -40,13 +42,26 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
     setCurrentUser(currentUser);
   }, []);
 
+  const [showConfetti, setFirstPaintConfetti] = useState<boolean | undefined>(undefined);
+
+  const setShowConfetti = useCallback((showConfetti: boolean | undefined) => {
+    if (showConfetti === undefined) {
+      setFirstPaintConfetti(true);
+    } else if (showConfetti === true) {
+      setFirstPaintConfetti(false);
+    }
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       currentUser,
       login,
+      showConfetti,
+      setShowConfetti,
     }),
-    [currentUser, login],
+    [currentUser, login, showConfetti, setShowConfetti],
   );
+  const { height, width } = useWindowSize();
 
   return (
     <WagmiConfig client={wagmiClient}>
@@ -65,6 +80,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
             <Footer />
           </div>
           <Toaster />
+          {showConfetti === true && <Confetti numberOfPieces={200} width={width} height={height} />}
         </AuthContext.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
