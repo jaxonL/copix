@@ -44,17 +44,30 @@ const Modal: React.FC<ModalProps> = ({ x, y, showModal, closeModal, color, setCo
   );
   // const { signal, root, humanNullifierHash, proof } = currentUser ? transformFromSuccessToProofInput(currentUser) : {};
 
+  // const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
+  //   contractName: CONTRACT_NAME,
+  //   functionName: "paint",
+  //   args: [
+  //     BigNumber.from(x ?? 0),
+  //     BigNumber.from(y ?? 0),
+  //     color,
+  //     paintArgs.root,
+  //     paintArgs.humanNullifierHash,
+  //     paintArgs.proof,
+  //   ],
+  //   onBlockConfirmation: txnReceipt => {
+  //     console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+  //   },
+  //   onSuccess: (data: any) => {
+  //     console.log("successful tx, data: ", data);
+  //     // Only displays confetti on the first paint
+  //     setShowConfetti(showConfetti);
+  //   },
+  // });
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
     contractName: CONTRACT_NAME,
-    functionName: "paint",
-    args: [
-      BigNumber.from(x ?? 0),
-      BigNumber.from(y ?? 0),
-      color,
-      paintArgs.root,
-      paintArgs.humanNullifierHash,
-      paintArgs.proof,
-    ],
+    functionName: "unsafePaint",
+    args: [BigNumber.from(x ?? 0), BigNumber.from(y ?? 0), color, paintArgs.humanNullifierHash],
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
     },
