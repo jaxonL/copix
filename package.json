@@ -42,6 +42,7 @@
     "gsap": "^3.12.1",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
+    "react-confetti": "^6.1.0",
     "tippy.js": "^6.3.7"
   }
 }
