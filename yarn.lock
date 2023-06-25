@@ -2710,6 +2710,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@liveblocks/client@npm:1.1.0, @liveblocks/client@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@liveblocks/client@npm:1.1.0"
+  dependencies:
+    "@liveblocks/core": 1.1.0
+  checksum: 3489571f52e27fe3bd63e22f286a6e22b9b181fcfdbebb74021e34dc631a6b46757519b8b8e51389b4de9e598b0473e21eab0d70a65e3e34fbade62f63ac283f
+  languageName: node
+  linkType: hard
+
+"@liveblocks/core@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@liveblocks/core@npm:1.1.0"
+  checksum: 6b8195f2f780d4aa4b8993a0a78a54227a31aa2ccb871a80350db498c068aab507f64b32f9b184d68847c9219f434f9837485967d30c91fad301492cb2569fc9
+  languageName: node
+  linkType: hard
+
+"@liveblocks/node@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@liveblocks/node@npm:1.1.0"
+  dependencies:
+    node-fetch: ^2.6.1
+  checksum: c503cb2406dcdbb8b9670778a56d10f1b0a490d9275afe2bdf7f95bbe70707ce94f571d9808f84dab10df0c437402ee7c8930e0f12b8a0b1727d79147982a5c7
+  languageName: node
+  linkType: hard
+
+"@liveblocks/react@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@liveblocks/react@npm:1.1.0"
+  dependencies:
+    "@liveblocks/client": 1.1.0
+    "@liveblocks/core": 1.1.0
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^16.14.0 || ^17 || ^18
+  checksum: 7422ac339fd5d3362e6b438145091e67235e1eab62cda94d50b21c3029001c72c03cfbdf788d570d6ce2976c6665fff289397585cfbbedfbce81d0b36c16be6b
+  languageName: node
+  linkType: hard
+
 "@mapbox/node-pre-gyp@npm:^1.0.5":
   version: 1.0.10
   resolution: "@mapbox/node-pre-gyp@npm:1.0.10"
@@ -4093,6 +4131,9 @@ __metadata:
     "@ethersproject/networks": ^5.7.1
     "@ethersproject/web": ^5.7.1
     "@heroicons/react": ^2.0.11
+    "@liveblocks/client": ^1.1.0
+    "@liveblocks/node": ^1.1.0
+    "@liveblocks/react": ^1.1.0
     "@rainbow-me/rainbowkit": ^0.11.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/node": ^17.0.35
@@ -14682,7 +14723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.11, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.11, node-fetch@npm:^2.6.7":
   version: 2.6.11
   resolution: "node-fetch@npm:2.6.11"
   dependencies:

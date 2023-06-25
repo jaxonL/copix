@@ -48,9 +48,10 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const setShowConfetti = useCallback((showConfetti: boolean | undefined) => {
     if (showConfetti === undefined) {
       setFirstPaintConfetti(true);
+
       setTimeout(function () {
         setFirstPaintConfetti(false);
-      }, 5000);
+      }, 10000);
     } else if (showConfetti === true) {
       setFirstPaintConfetti(false);
     }
