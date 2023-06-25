@@ -151,8 +151,8 @@ contract Copix is ERC721, Ownable {
 
   function _getTokenIdFromPixel(uint256 x, uint256 y) private view returns (uint256) {
     // TODO: check less than width/height
-    require(x >= canvasWidth, "x must be less than canvas width limit");
-    require(y >= canvasHeight, "y must be less than canvas height limit");
+    require(x < canvasWidth, "x must be less than canvas width limit");
+    require(y < canvasHeight, "y must be less than canvas height limit");
     
     return ((y * canvasWidth) + x);
   }
