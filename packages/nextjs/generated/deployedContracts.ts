@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Copix: {
-          address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+          address: "0x68B1D87F95878fE05B998F19b66F4baba5De1aed",
           abi: [
             {
               inputs: [
@@ -320,6 +320,25 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [
+                {
+                  internalType: "string",
+                  name: "color",
+                  type: "string",
+                },
+              ],
+              name: "getSvgImage",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "pure",
+              type: "function",
+            },
+            {
               inputs: [],
               name: "getTokenId",
               outputs: [
@@ -545,7 +564,7 @@ const contracts = {
                 },
                 {
                   internalType: "bytes",
-                  name: "_data",
+                  name: "data",
                   type: "bytes",
                 },
               ],
@@ -770,7 +789,7 @@ const contracts = {
       name: "polygonMumbai",
       contracts: {
         Copix: {
-          address: "0xB000a9e67318090885dD97258994baD3f581fB06",
+          address: "0x6Cf1af6D048aB7c9cCC7F35318Cdd9e0bE15B818",
           abi: [
             {
               inputs: [
@@ -1085,6 +1104,25 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [
+                {
+                  internalType: "string",
+                  name: "color",
+                  type: "string",
+                },
+              ],
+              name: "getSvgImage",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "pure",
+              type: "function",
+            },
+            {
               inputs: [],
               name: "getTokenId",
               outputs: [
@@ -1310,7 +1348,7 @@ const contracts = {
                 },
                 {
                   internalType: "bytes",
-                  name: "_data",
+                  name: "data",
                   type: "bytes",
                 },
               ],

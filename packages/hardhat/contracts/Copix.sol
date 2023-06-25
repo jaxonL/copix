@@ -68,10 +68,11 @@ contract Copix is ERC721, Ownable {
     _;
   }
 
-  modifier onlyContract() {
-    require(msg.sender == address(this), "Not the Copix contract");
-    _;
-  }
+  // next milestone
+  // modifier onlyContract() {
+  //   require(msg.sender == address(this), "Not the Copix contract");
+  //   _;
+  // }
 
   // Constructor: Called once on contract deployment
   // Check packages/hardhat/deploy/00_deploy_your_contract.ts
@@ -205,7 +206,9 @@ contract Copix is ERC721, Ownable {
       return string(
         abi.encodePacked(
           '{ "name": "Copix #', tokenId.toString(), 
-          '", "color": "#ffffff", "timestamp": 0, "lastEditedbyHuman": 0 }'
+          '", "color": "#ffffff", "timestamp": 0, "lastEditedbyHuman": 0,"image": "',
+          getSvgImage('#ffffff'),
+        '", "description": "CoPix is a decentralized canvas where anyone can paint a pixel.", "external_url": "https://copix-loo.vercel.app/" }'
         )
       ); 
     }
@@ -220,9 +223,20 @@ contract Copix is ERC721, Ownable {
         '", "color": "', latestColor,
         '", "timestamp": ', latestTimestamp.toString(),
         ', "lastEditedbyHuman": ', latestEditedByHuman.toString(),
-        '}'
+        ', "image": "', getSvgImage(latestColor),
+        '", "description": "CoPix is a decentralized canvas where anyone can paint a pixel.\\nThis pixel was last painted on ', latestTimestamp.toString(),
+        ' by ', latestEditedByHuman == 1 ? 'a phone-verified' : latestEditedByHuman == 2 ? 'an orb-verified' : 'an', ' address."',
+        ', "attributes": [{ "trait_type": "Color", "value": "', latestColor, '"},{ "trait_type": "Timestamp", "display_type": "number", "value": ', latestTimestamp.toString(), '}],"external_url": "https://copix-loo.vercel.app/"}'
       )
     ); 
+  }
+
+  function getSvgImage(string memory color) public pure returns (string memory) {
+    return string(
+      abi.encodePacked(
+        'data:image/svg+xml;utf8,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"100\\" height=\\"100\\"><rect width=\\"100%\\" height=\\"100%\\" fill=\\"', color, '\\"/></svg>'
+      )
+    );
   }
 
   function currentState() public view returns (string[] memory) {
@@ -294,9 +308,9 @@ contract Copix is ERC721, Ownable {
       return _tokenId;
   }
 
-  function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public virtual override onlyContract {
-    super.safeTransferFrom(from, to, tokenId, _data);
-  }
+  // function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public virtual override onlyContract {
+  //   super.safeTransferFrom(from, to, tokenId, _data);
+  // }
 
   /**
    * Function that allows the owner to withdraw all the Ether in the contract
