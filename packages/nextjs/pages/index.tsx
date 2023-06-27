@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { RoomProvider, useBroadcastEvent, useEventListener, useMyPresence, useOthers } from "../liveblocks.config";
 import CanvasComponent from "./canvas";
@@ -189,7 +190,7 @@ const Example = ({ children }: any) => {
           >
             {state.mode === CursorMode.Chat && (
               <>
-                <img src="cursor.svg" />
+                <Image src="cursor.svg" alt="cursor" />
 
                 <div
                   className="absolute top-5 left-2 px-4 py-2 bg-blue-500 text-white leading-relaxed text-sm"
