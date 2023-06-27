@@ -190,7 +190,7 @@ const Example = ({ children }: any) => {
           >
             {state.mode === CursorMode.Chat && (
               <>
-                <Image src="cursor.svg" alt="cursor" />
+                <Image width="24" height="36" src="cursor.svg" alt="cursor" />
 
                 <div
                   className="absolute top-5 left-2 px-4 py-2 bg-blue-500 text-white leading-relaxed text-sm"
