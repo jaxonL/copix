@@ -54,7 +54,7 @@ type ReactionEvent = {
   value: string;
 };
 
-function Example() {
+const Example = ({ children }: any) => {
   const others = useOthers();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const broadcast = useBroadcastEvent();
@@ -247,7 +247,6 @@ function Example() {
           if (presence == null || !presence.cursor) {
             return null;
           }
-
           return (
             <>
               <Cursor
@@ -260,10 +259,11 @@ function Example() {
             </>
           );
         })}
+        {children}
       </div>
     </>
   );
-}
+};
 
 export default function Home() {
   const roomId = useOverrideRoomId("nextjs-live-cursors-chat");
@@ -278,8 +278,9 @@ export default function Home() {
           message: "",
         })}
       >
-        <CanvasComponent />
-        <Example />
+        <Example>
+          <CanvasComponent />
+        </Example>
       </RoomProvider>
     </>
   );
