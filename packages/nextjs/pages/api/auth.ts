@@ -2,7 +2,8 @@ import { authorize } from "@liveblocks/node";
 
 // Replace this key with your secret key provided at
 // https://liveblocks.io/dashboard/projects/{projectId}/apikeys
-const secret: string = process.env.LIVEBLOCKS_PRIVATE_KEY!;
+// eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
+const secret: string = process.env.NEXT_PUBLIC_LIVEBLOCKS_PRIVATE_KEY!;
 
 export default async function auth(req: any, res: any) {
   /**
