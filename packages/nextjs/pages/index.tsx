@@ -309,6 +309,7 @@ export async function getStaticProps() {
 function useOverrideRoomId(roomId: string) {
   const { query } = useRouter();
   const overrideRoomId = useMemo(() => {
+    console.log("roomID:", query?.roomId ? `${roomId}-${query.roomId}` : roomId);
     return query?.roomId ? `${roomId}-${query.roomId}` : roomId;
   }, [query, roomId]);
 
