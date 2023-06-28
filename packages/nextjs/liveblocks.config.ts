@@ -2,9 +2,24 @@ import { createClient } from "@liveblocks/client";
 import type { BaseUserMeta } from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";
 
+// const client = createClient({
+//   throttle: 16,
+//   publicApiKey: process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY!,
+// });
+
 const client = createClient({
-  throttle: 16,
-  publicApiKey: process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY!,
+  authEndpoint: async room => {
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: {
+        Authentication: "token",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ room }),
+    });
+    console.log("authenticating with private key with room:", room);
+    return await response.json();
+  },
 });
 
 // Presence represents the properties that will exist on every User in the Room
