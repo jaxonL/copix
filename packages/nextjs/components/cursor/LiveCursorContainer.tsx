@@ -134,6 +134,13 @@ export const LiveCursorContainer = ({ children }: any) => {
       style={{
         cursor: state.mode === CursorMode.Chat ? "none" : "url(cursor.svg) 0 0, auto",
       }}
+      onMouseDown={event => {
+        event.preventDefault();
+        if (cursor != null && state.mode === CursorMode.Chat) {
+          updateMyPresence({ message: "" });
+          setState({ mode: CursorMode.Hidden });
+        }
+      }}
       onPointerMove={event => {
         event.preventDefault();
         if (cursor == null || state.mode !== CursorMode.ReactionSelector) {
