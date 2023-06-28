@@ -1,14 +1,12 @@
+import React from "react";
 import CanvasComponent from "./canvas";
-import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 
-const Home: NextPage = () => {
+export default function Home() {
   return (
     <>
       <MetaHeader />
       <CanvasComponent />
     </>
   );
-};
-
-export default Home;
+}

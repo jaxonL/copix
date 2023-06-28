@@ -131,7 +131,7 @@ const CanvasComponent = (): JSX.Element => {
     <>
       <Modal {...selectedPixel} showModal={showModal} closeModal={closeModal} color={color} setColor={setColor} />
       <SignInPrompt showSignIn={showSignIn} closeSignIn={closeSignIn} />
-      <div className="h-full bg-transparent overflow-hidden font-lato select-none flex my-7 items-center justify-center">
+      <div className="h-full bg-transparent overflow-hidden font-lato select-none flex my-7 items-center justify-center flex flex-col">
         {loadingWidth || loadingHeight || loadingCanvasState || !height || !width || !canvasState ? (
           <div>Loading...</div>
         ) : (
@@ -152,10 +152,23 @@ const CanvasComponent = (): JSX.Element => {
             })}
           </div>
         )}
+        {/* width: {width?.toNumber()}, height: {height?.toNumber()} */}
+        <ul className="flex items-center justify-center space-x-2 mt-4 text-base-content">
+          <li className="flex items-center space-x-2 text-sm bg-primary rounded-md py-2 px-3">
+            <span>Reactions</span>
+            <span className="block uppercase font-medium text-xs rounded border border-gray-300 px-1">E</span>
+          </li>
 
-        <div className="controls absolute left-0 right-0 bottom-0 bg-gray-800 p-0 flex items-center justify-between overflow-hidden">
-          <div className="face-space w-16">{/* width: {width?.toNumber()}, height: {height?.toNumber()} */}</div>
-        </div>
+          <li className="flex items-center space-x-2 text-sm bg-primary rounded-md py-2 px-3">
+            <span>Chat</span>
+            <span className="block uppercase font-medium text-xs rounded border border-gray-300 px-1">/</span>
+          </li>
+
+          <li className="flex items-center space-x-2 text-sm bg-primary rounded-md py-2 px-3 ">
+            <span>Escape</span>
+            <span className="block uppercase font-medium text-xs  rounded border border-gray-300 px-1">esc</span>
+          </li>
+        </ul>
       </div>
     </>
   );
