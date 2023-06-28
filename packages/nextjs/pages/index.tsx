@@ -55,7 +55,7 @@ type ReactionEvent = {
   value: string;
 };
 
-const Example = ({ children }: any) => {
+const LiveCursorContainer = ({ children }: any) => {
   const others = useOthers();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const broadcast = useBroadcastEvent();
@@ -279,9 +279,9 @@ export default function Home() {
           message: "",
         })}
       >
-        <Example>
+        <LiveCursorContainer>
           <CanvasComponent />
-        </Example>
+        </LiveCursorContainer>
       </RoomProvider>
     </>
   );

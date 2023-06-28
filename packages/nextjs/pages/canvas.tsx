@@ -153,26 +153,20 @@ const CanvasComponent = (): JSX.Element => {
           </div>
         )}
         {/* width: {width?.toNumber()}, height: {height?.toNumber()} */}
-        <ul className="flex items-center justify-center space-x-2 mt-4">
-          <li className="flex items-center space-x-2 text-sm bg-gray-100 rounded-md py-2 px-3">
+        <ul className="flex items-center justify-center space-x-2 mt-4 text-base-content">
+          <li className="flex items-center space-x-2 text-sm bg-primary rounded-md py-2 px-3">
             <span>Reactions</span>
-            <span className="block uppercase font-medium text-xs text-gray-500 rounded border border-gray-300 px-1">
-              E
-            </span>
+            <span className="block uppercase font-medium text-xs rounded border border-gray-300 px-1">E</span>
           </li>
 
-          <li className="flex items-center space-x-2 text-sm bg-gray-100 rounded-md py-2 px-3">
+          <li className="flex items-center space-x-2 text-sm bg-primary rounded-md py-2 px-3">
             <span>Chat</span>
-            <span className="block uppercase font-medium text-xs text-gray-500 rounded border border-gray-300 px-1">
-              /
-            </span>
+            <span className="block uppercase font-medium text-xs rounded border border-gray-300 px-1">/</span>
           </li>
 
-          <li className="flex items-center space-x-2 text-sm bg-gray-100 rounded-md py-2 px-3">
+          <li className="flex items-center space-x-2 text-sm bg-primary rounded-md py-2 px-3 ">
             <span>Escape</span>
-            <span className="block uppercase font-medium text-xs text-gray-500 rounded border border-gray-300 px-1">
-              esc
-            </span>
+            <span className="block uppercase font-medium text-xs  rounded border border-gray-300 px-1">esc</span>
           </li>
         </ul>
       </div>
