@@ -51,7 +51,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
 
       setTimeout(function () {
         setFirstPaintConfetti(false);
-      }, 10000);
+      }, 5000);
     } else if (showConfetti === true) {
       setFirstPaintConfetti(false);
     }
