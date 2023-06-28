@@ -10,7 +10,7 @@ type Props = {
 export default function FlyingReaction({ x, y, timestamp, value }: Props) {
   return (
     <div
-      className={`absolute select-none pointer-events-none ${styles.disappear} text-${(timestamp % 5) + 2}xl ${
+      className={` z-40 absolute select-none pointer-events-none ${styles.disappear} text-${(timestamp % 5) + 2}xl ${
         styles["goUp" + (timestamp % 3)]
       }`}
       style={{ left: x, top: y }}

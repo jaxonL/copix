@@ -10,7 +10,7 @@ type Props = {
 export default function Cursor({ color, x, y, message }: Props) {
   return (
     <div
-      className="absolute pointer-events-none top-0 left-0"
+      className="absolute pointer-events-none top-0 left-0 z-40 "
       style={{
         transform: `translateX(${x}px) translateY(${y}px)`,
       }}

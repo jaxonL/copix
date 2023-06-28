@@ -10,7 +10,7 @@ export default function ReactionSelector({ setReaction }: Props) {
       className="bg-white rounded-full px-2 transform -translate-x-1/2 -translate-y-1/2"
       style={{
         boxShadow:
-          "0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+          "0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10pxe 10px -5px rgba(0, 0, 0, 0.04)",
       }}
       onPointerMove={e => e.stopPropagation()}
     >

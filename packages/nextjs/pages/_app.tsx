@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import { AuthContext } from "../components/copix/AuthContext";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
@@ -12,12 +13,19 @@ import { useDarkMode } from "usehooks-ts";
 import { WagmiConfig } from "wagmi";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
+import { LiveCursorContainer } from "~~/components/cursor/LiveCursorContainer";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
+import { RoomProvider } from "~~/liveblocks.config";
 import { useGlobalState } from "~~/services/store/store";
 import { wagmiClient } from "~~/services/web3/wagmiClient";
 import { appChains } from "~~/services/web3/wagmiConnectors";
 import "~~/styles/globals.css";
+
+/**
+ * This function is used when deploying an example on liveblocks.io.
+ * You can ignore it completely if you run the example locally.
+ */
 
 const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const price = useNativeCurrencyPrice();
@@ -68,6 +76,17 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   );
   const { height, width } = useWindowSize();
 
+  function useOverrideRoomId(roomId: string) {
+    const { query } = useRouter();
+    const overrideRoomId = useMemo(() => {
+      console.log("roomID:", query?.roomId ? `${roomId}-${query.roomId}` : roomId);
+      return query?.roomId ? `${roomId}-${query.roomId}` : roomId;
+    }, [query, roomId]);
+
+    return overrideRoomId;
+  }
+  const roomId = useOverrideRoomId("nextjs-live-cursors-chat-copix");
+
   return (
     <WagmiConfig client={wagmiClient}>
       <NextNProgress />
@@ -78,14 +97,25 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
       >
         <AuthContext.Provider value={contextValue}>
           {showConfetti === true && <Confetti numberOfPieces={70} width={width} height={height} />}
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="relative flex flex-col flex-1">
-              <Component {...pageProps} />
-            </main>
-            <Footer />
-          </div>
-          <Toaster />
+
+          <RoomProvider
+            id={roomId}
+            initialPresence={() => ({
+              cursor: null,
+              message: "",
+            })}
+          >
+            <div className="flex flex-col min-h-screen">
+              <LiveCursorContainer>
+                <Header />
+                <main className="relative flex flex-col flex-1">
+                  <Component {...pageProps} />
+                </main>
+                <Footer />
+              </LiveCursorContainer>
+            </div>
+            <Toaster />
+          </RoomProvider>
         </AuthContext.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
