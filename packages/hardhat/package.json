@@ -32,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "chai": "^4.3.6",
-    "eslint": "^8.26.0",
+    "eslint": "^9.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "ethers": "^5.7.1",
